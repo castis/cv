@@ -16,7 +16,7 @@ gulp.task('watch', () => {
 
 gulp.task('js', () => {
     gulp.src('public/js/*.js')
-        .pipe(sourcemaps.init())
+        // .pipe(sourcemaps.init())
         .pipe(babel({
             presets: ['es2015', 'es2016']
         }))

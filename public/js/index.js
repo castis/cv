@@ -5,17 +5,15 @@
 
     const ctx = canvas.getContext('2d');
 
-    const bubbles = [];
-    for(var x = 0; x < 50; x++) {
-      bubbles.push(new Bubble());
-    }
-
     window.addEventListener('resize', () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
     });
 
-    animate();
+    const bubbles = [];
+    for (let x = 0; x < 50; x++) {
+      bubbles.push(new Bubble());
+    }
 
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -27,6 +25,7 @@
 
         requestAnimationFrame(animate);
     }
+    animate();
 
     function random_color() {
         return '2' + parseInt(Math.random() * 55)
@@ -39,10 +38,10 @@
         function init() {
             return {
                 x: Math.random() * canvas.width,
-                y: canvas.height + Math.random() * 100,
+                y: canvas.height + 20,
                 alpha: 0.5 + Math.random() * 0.3,
                 scale: 0.1 + Math.random() * 0.3,
-                velocity: Math.random(),
+                velocity: Math.abs(Math.random()),
                 color: Array(3).fill(random_color()).join(','),
             }
         }
@@ -55,8 +54,8 @@
             else {
                 state = Object.assign(state, {
                     x: state.x,
-                    y: state.y -= state.velocity - state.scale,
-                    velocity: state.velocity += 0.0005,
+                    y: state.y -= state.velocity,
+                    velocity: state.velocity -= 0.005,
                     alpha: state.alpha -= 0.005,
                 });
             }
