@@ -20,7 +20,8 @@ gulp.task('js', () => {
         .pipe(babel({
             presets: ['es2015', 'es2016']
         }))
-        .pipe(sourcemaps.write('.'))
+        .pipe(uglify())
+        // .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('public/assets'));
 });
 
