@@ -11,7 +11,7 @@
     <header>
       <h1>Hello<br>My name is <span>Daniel</span> and this is my CV.</h1>
     </header>
-    <div class="container">
+    <div class="main container">
       <div class="row">
         <div class="col-xs-12 col-sm-7">
           <div class="box">
@@ -21,12 +21,12 @@
           </div>
           <div class="box">
             <h2>Experience</h2>
-            <div class="job clearfix">
-              <div class="col-xs-3">
+            <div class="job">
+              <div class="col-sm-3">
                 <div class="where">Mobelux</div>
                 <div class="year">2016 - Current</div>
               </div>
-              <div class="col-xs-9">
+              <div class="col-sm-9">
                 <div class="profession">Web Developer</div>
                 <div class="description">Assisted in maintanence and upkeep on several client products, primarily ecommerce and publishing projects.</div>
                 <ul class="tech">
@@ -38,12 +38,12 @@
                 </ul>
               </div>
             </div>
-            <div class="job clearfix">
-              <div class="col-xs-3">
+            <div class="job">
+              <div class="col-sm-3">
                 <div class="where">Entrepreneur Magazine</div>
                 <div class="year">2013 - 2015</div>
               </div>
-              <div class="col-xs-9">
+              <div class="col-sm-9">
                 <div class="profession">Senior Engineer</div>
                 <div class="description">Helped lead the rebuild of the flagship product, Entrepreneur.com using modern development techniques. Restructured the home-rolled CMS and implemented a queue to take some load off the user experience and help with static asset generation.</div>
                 <ul class="tech">
@@ -64,12 +64,12 @@
                 </ul>
               </div>
             </div>
-            <div class="job clearfix">
-              <div class="col-xs-3">
+            <div class="job">
+              <div class="col-sm-3">
                 <div class="where">Louddoor</div>
                 <div class="year">2012 - 2013</div>
               </div>
-              <div class="col-xs-9">
+              <div class="col-sm-9">
                 <div class="profession">Web Developer</div>
                 <div class="description">Set up promotions in their in-house Facebook analytics platform. Completed small projects for miscellaneous clients.</div>
                 <ul class="tech">
@@ -85,11 +85,11 @@
               </div>
             </div>
             <div class="job clearfix">
-              <div class="col-xs-3">
+              <div class="col-sm-3">
                 <div class="where">Parrazi</div>
                 <div class="year">2009 - 2010</div>
               </div>
-              <div class="col-xs-9">
+              <div class="col-sm-9">
                 <div class="profession">Developer</div>
                 <div class="description">Co-created an application for the identification and cataloging of items in video and still images.</div>
                 <ul class="tech">
@@ -104,12 +104,12 @@
                 </ul>
               </div>
             </div>
-            <div class="job clearfix">
-              <div class="col-xs-3">
+            <div class="job">
+              <div class="col-sm-3">
                 <div class="where">Robertson Marketing Group</div>
                 <div class="year">2008 - 2012</div>
               </div>
-              <div class="col-xs-9">
+              <div class="col-sm-9">
                 <div class="profession">Frontend Developer</div>
                 <div class="description">Turned layout designs into UI.</div>
                 <ul class="tech">
@@ -124,7 +124,7 @@
           </div>
         </div>
         <div class="col-xs-12 col-sm-5">
-          <div class="box clearfix">
+          <div class="box">
             <h2>Contact</h2>
             <table id="contact">
               <tr>
@@ -142,7 +142,7 @@
             </table>
           </div>
           <div class="box">
-            <h2>Skills</h2>
+            <h2>Things I can help with</h2>
             <div class="skills">
               <div class="item-skill php">PHP</div>
               <div class="item-skill db">MySQL/Postgres</div>
@@ -163,19 +163,12 @@
           </div>
         </div>
       </div>
+      <canvas id="bubbles"></canvas>
     </div>
     <footer>
-      <p>Background image from <a href="https://unsplash.com/">Unsplash</a></p>
+      <p class="credit">Background image from <a href="https://unsplash.com/">Unsplash</a></p>
+      <p class="debug"></p>
     </footer>
-    <canvas id="bubbles"></canvas>
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-25609352-3', 'auto');
-      ga('send', 'pageview');
-    </script>
     <script src="assets/index.js"></script>
   </body>
 </html>

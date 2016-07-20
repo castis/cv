@@ -20,7 +20,7 @@ body {
     color: #363636;
     position: relative;
     padding: 0 0 20px;
-    background: #FFF url('../img/bg.jpg') no-repeat center center;
+    background: #0D1015 url('../img/bg.jpg') no-repeat center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -30,31 +30,17 @@ header {
     margin-top: 30px;
     text-align: center;
 
-    #photo {
-        width: 160px;
-        height: 160px;
-        border-radius: 50%;
-        overflow: hidden;
-        padding: 3px;
-        background: #ddd;
-        display: inline-block;
-        display: none;
-        img {
-            width: 154px;
-            height: 154px;
-            border-radius: 50%;
-        }
-    }
-
     h1 {
         margin: 20px 0 40px;
         padding: 0;
         font-size: 2.4em;
         font-weight: 700;
         letter-spacing: -1px;
+
         span {
             color: @accent-one;
         }
+
         &::first-line {
             font-size: 1.5em;
             letter-spacing: -0.03em;
@@ -63,49 +49,60 @@ header {
         }
     }
 }
-.container {
+.main.container {
     margin-top: 20px;
     background: rgb(255, 255, 255);
     background: rgba(255, 255, 255, 0.95);
-    border: solid 1px #ddd;
+    border: solid 1px #ccc;
     position: relative;
     z-index: 10;
 }
+@media (max-width: @screen-xs-max) {
+    .main.container {
+        border-width: 1px 0;
+    }
+}
 .box {
     margin-bottom: 45px;
+
     h2 {
         color: @accent-one;
         font-size: 1.8em;
         font-weight: 700;
         text-transform: uppercase;
-        &:before {
-            content: '//';
-            margin-right: 5px;
-        }
     }
+
     p {
         font-size: 1.3em;
         line-height: 1.5em;
     }
 }
 .job {
+    .clearfix();
+    > div { padding: 0; }
+
     margin-bottom: 15px;
+
     .where {
         font-size: 1.4em;
         font-weight: bold;
     }
+
     .year {
         font-size: 1.3em;
         opacity: 0.7;
     }
+
     .profession {
         font-size: 1.6em;
         font-weight: bold;
     }
+
     .description {
         font-size: 1.2em;
         line-height: 1.5em;
     }
+
     h3 {
         color: @accent-one;
         font-size: 1.4em;
@@ -113,17 +110,22 @@ header {
         text-transform: uppercase;
         margin: 5px 0 2px;
     }
+
     .tech {
         display: block;
         margin: 5px 0 0;
         padding: 0;
+
         li {
             display: inline-block;
+            position: relative;
+            z-index: 15;
             list-style: none;
             background: @accent-two;
             padding: 2px 5px;
             margin: 0 0 3px;
             color: #fff;
+
             &:before {
                 content: "\f00c";
                 font-family: FontAwesome;
@@ -136,7 +138,7 @@ header {
 }
 #contact {
     .icon {
-        padding: 10px;
+        padding: 10px 10px 10px 0;
         border: solid 1px #aaa;
         border-width: 0 1px 10px 0;
         border-collapse: collapse;
@@ -144,12 +146,15 @@ header {
         float: left;
         text-align: center;
     }
+
     &:last-child .icon {
         border-bottom: none;
     }
+
     .fa {
         font-size: 2em;
     }
+
     .title {
         font-size: 1.5em;
         font-weight: 700;
@@ -160,6 +165,7 @@ header {
             color: @accent-one;
         }
     }
+
     .description {
         width: 80%;
         font-size: 1.2em;
@@ -199,19 +205,23 @@ header {
     &.legend:before {
         margin-left: 0;
     }
+
     &:nth-child(2) span {
         margin-left: -25px;
     }
 }
 .legend-right {
     text-align: right;
+
     &.legend:before {
         margin-right: 0;
     }
+
     &:nth-child(3) span {
         margin-right: -20px;
     }
 }
+
 .hobby {
     color: #fff;
     display: inline-block;
@@ -221,6 +231,7 @@ header {
     background: @accent-two;
     position: relative;
     font-size: 1.2em;
+
     &:before {
         content: "\f004";
         font-family: FontAwesome;
@@ -231,42 +242,32 @@ header {
         left: 7px;
     }
 }
+
 #bubbles {
     position: absolute;
     bottom: 0;
+    left: 0;
     display: block;
-    height: 600px;
+    height: 120px;
     width: 100%;
     z-index: 5;
 }
+
 footer {
-    text-align: center;
+    .container();
+
     color: #666;
-    margin: 25px 0 0;
-    position: relative;
-    z-index: 10;
+    margin: 25px auto 0;
+
     a {
         color: #666;
         text-decoration: underline;
     }
-}
-@media (min-width: 500px) {
-    #education .description {
-        width: 85%;
+
+    .credit {
+        float: left;
     }
-}
-@media (min-width: 768px) {
-    #education .description {
-        width: 85%;
-    }
-}
-@media (min-width: 992px) {
-    #education .description {
-        width: 87%;
-    }
-}
-@media (min-width: 1200px) {
-    #education .description {
-        width: 90%;
+    .debug {
+        float: right;
     }
 }

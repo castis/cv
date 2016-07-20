@@ -6,19 +6,20 @@ const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
 const connect = require('gulp-connect');
 const babel = require('gulp-babel');
+const uncss = require('gulp-uncss');
 
 gulp.task('default', ['less', 'js', 'watch', 'http']);
 
 gulp.task('watch', () => {
-    gulp.watch('public/less/*', ['less']);
+    gulp.watch(['public/less/*', 'public/*.html'], ['less']);
     gulp.watch('public/js/*', ['js']);
 });
 
 gulp.task('js', () => {
     gulp.src('public/js/*.js')
-        // .pipe(sourcemaps.init())
+        .pipe(sourcemaps.init())
         .pipe(babel({
-            presets: ['es2015', 'es2016']
+            presets: ['es2015', 'stage-0']
         }))
         .pipe(uglify())
         // .pipe(sourcemaps.write('.'))
@@ -28,6 +29,9 @@ gulp.task('js', () => {
 gulp.task('less', () => {
     gulp.src('public/less/*.less')
         .pipe(less())
+        .pipe(uncss({
+            html: ['public/*.html']
+        }))
         .pipe(minifycss())
         .pipe(gulp.dest('public/assets'));
 });
