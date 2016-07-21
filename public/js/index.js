@@ -46,7 +46,7 @@ ga('send', 'pageview');
 
     function draw(state) {
         context.beginPath();
-        context.arc(state.x, state.y, state.radius, 0, 2 * Math.PI);
+        context.arc(state.x, state.y, state.radius, 0, 6.2832);
         context.fillStyle = 'rgba(100, 100, 100, ' + state.alpha + ')';
         context.fill();
     }
@@ -63,8 +63,9 @@ ga('send', 'pageview');
     }
 
     // if we add all the bubbles at once then they come in waves
+    const maxBubbles = canvas.width / 10;
     const addBubbles = setInterval(() => {
-        if (bubbles.length > (canvas.width / 10)) {
+        if (bubbles.length > maxBubbles) {
             return clearInterval(addBubbles);
         }
 
