@@ -6,14 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Daniel Sibitzky</title>
-    <link href="assets/index.css" rel="stylesheet">
+    <link href="/assets/index.css" rel="stylesheet">
 </head>
 
 <body>
     <header>
         <h1>Hello<br>My name is <span>Daniel</span> and this is my CV.</h1>
     </header>
-    <main>
+    <main class="container">
         <div class="row">
             <div class="about box col-sm-7">
                 <h2>About Me</h2>
@@ -39,7 +39,9 @@
                     </div>
                     <div class="col-sm-9">
                         <div class="profession">Web Developer</div>
-                        <div class="description">Assisted in maintanence and upkeep on several client products, primarily ecommerce and publishing projects.</div>
+                        <div class="description">
+                            Assisted in maintanence and upkeep on several client products, primarily ecommerce and publishing projects.
+                        </div>
                         <ul class="tech">
                             <li>Python</li>
                             <li>Django</li>
@@ -56,8 +58,9 @@
                     </div>
                     <div class="col-sm-9">
                         <div class="profession">Senior Engineer</div>
-                        <div class="description">Helped lead the rebuild of the flagship product, Entrepreneur.com using modern development techniques. Restructured the home-rolled CMS and implemented a queue to take some load off the user experience and help with static asset
-                            generation.</div>
+                        <div class="description">
+                            Helped lead the rebuild of the flagship product, Entrepreneur.com using modern development techniques. Restructured the home-rolled CMS and implemented a queue to take some load off the user experience and help with static asset generation.
+                        </div>
                         <ul class="tech">
                             <li>Apache</li>
                             <li>PHP</li>
@@ -83,7 +86,9 @@
                     </div>
                     <div class="col-sm-9">
                         <div class="profession">Web Developer</div>
-                        <div class="description">Set up promotions in their in-house Facebook analytics platform. Completed small projects for miscellaneous clients.</div>
+                        <div class="description">
+                            Set up promotions in their in-house Facebook analytics platform. Completed small projects for miscellaneous clients.
+                        </div>
                         <ul class="tech">
                             <li>Apache</li>
                             <li>PHP</li>
@@ -103,7 +108,9 @@
                     </div>
                     <div class="col-sm-9">
                         <div class="profession">Developer</div>
-                        <div class="description">Co-created an application for the identification and cataloging of items in video and still images.</div>
+                        <div class="description">
+                            Co-created an application for the identification and cataloging of items in video and still images.
+                        </div>
                         <ul class="tech">
                             <li>Apache</li>
                             <li>PHP</li>
@@ -157,13 +164,12 @@
                 </ul>
             </div>
         </div>
-        <canvas id="bubbles"></canvas>
+        <canvas></canvas>
     </main>
-    <footer>
-        <p class="credit">Background image from <a href="https://unsplash.com/">Unsplash</a></p>
-        <p class="debug"></p>
+    <footer class="container">
+        <p>Background image from <a href="https://unsplash.com/">Unsplash</a></p>
     </footer>
-    <script src="assets/index.js"></script>
+    <script src="/assets/index.js"></script>
 </body>
 
 </html>

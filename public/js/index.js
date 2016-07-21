@@ -15,7 +15,7 @@ ga('send', 'pageview');
 
 (() => {
     const container = document.getElementsByTagName('main')[0];
-    const canvas = document.getElementById('bubbles');
+    const canvas = document.getElementsByTagName('canvas')[0];
     const context = canvas.getContext('2d');
     const bubbles = [];
 
@@ -54,7 +54,8 @@ ga('send', 'pageview');
     function animate() {
         context.clearRect(0, 0, canvas.width, canvas.height);
 
-        for (let i in bubbles) {
+        let i = bubbles.length;
+        while (i--) {
             draw(bubbles[i] = update(bubbles[i]));
         }
 
