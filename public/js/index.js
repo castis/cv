@@ -36,11 +36,11 @@ ga('send', 'pageview');
         }
 
         return {
-            ...state,
             x: state.x,
             y: state.y - state.velocity,
+            alpha: state.alpha - 0.005,
+            radius: state.radius,
             velocity: state.velocity - 0.005,
-            alpha: state.alpha - 0.005
         };
     }
 
