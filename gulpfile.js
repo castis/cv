@@ -1,3 +1,5 @@
+"use strict";
+
 const gulp = require('gulp');
 const concat = require('gulp-concat');
 const less = require('gulp-less');
@@ -7,6 +9,7 @@ const uglify = require('gulp-uglify');
 const connect = require('gulp-connect');
 const babel = require('gulp-babel');
 const uncss = require('gulp-uncss');
+const argv = require('yargs').argv
 
 gulp.task('default', ['less', 'js', 'watch', 'http']);
 
@@ -16,14 +19,25 @@ gulp.task('watch', () => {
 });
 
 gulp.task('js', () => {
-    gulp.src('public/js/*.js')
-        .pipe(sourcemaps.init())
-        .pipe(babel({
+    let vinyl = gulp.src('public/js/*.js');
+
+    if (!argv.c) {
+        vinyl = vinyl.pipe(sourcemaps.init());
+    }
+
+    vinyl = vinyl.pipe(babel({
             presets: ['es2015', 'stage-0']
         }))
-        .pipe(uglify())
-        // .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('public/assets'));
+        .pipe(uglify({
+            compress: !!argv.c,
+            mangle: !!argv.c
+        }));
+
+    if (!argv.c) {
+        vinyl = vinyl.pipe(sourcemaps.write('.'));
+    }
+
+    vinyl.pipe(gulp.dest('public/assets'));
 });
 
 gulp.task('less', () => {

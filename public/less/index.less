@@ -228,10 +228,12 @@ main {
     }
 }
 
+// remove side borders when container is full-width
 @media (max-width: @screen-xs-max) {
     main { border-width: 1px 0; }
 }
 
+// pull it left when in tiny-mode
 @media (max-width: @screen-sm-max) {
     .hobbies {
         float: left !important;
@@ -240,24 +242,39 @@ main {
 
 canvas {
     position: absolute;
-    bottom: 0;
+    top: 0;
+    // bottom: 0;
     left: 0;
-    display: block;
+    display: inline-block;
     height: 120px;
+    // margin-top: 120px;
+    margin: 0 auto;
     width: 100%;
-    z-index: 5;
+    z-index: 0;
 }
 
 footer {
+    position: relative;
     color: #666;
-    margin: 25px auto 0;
+    margin: 0 auto;
+    height: 50px;
+    line-height: 50px;
+    z-index: 10;
+
+    p {
+        padding: 0;
+        float: left;
+    }
 
     a {
         color: #666;
         text-decoration: underline;
     }
 
-    div {
-        float: left;
+    #switch {
+        float: right;
+        margin: 15px 10px 0 0;
+        opacity: 0.4;
+        pointer: cursor;
     }
 }
