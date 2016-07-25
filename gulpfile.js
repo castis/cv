@@ -3,6 +3,7 @@
 const gulp = require('gulp');
 const concat = require('gulp-concat');
 const less = require('gulp-less');
+const sass = require('gulp-sass');
 const minifycss = require('gulp-minify-css');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
@@ -20,12 +21,12 @@ gulp.task(
 );
 
 gulp.task('watch', () => {
-    gulp.watch(['public/less/*', 'public/*.html'], ['less']);
-    gulp.watch('public/js/*', ['js']);
+    gulp.watch(['src/less/*', 'public/*.html'], ['less']);
+    gulp.watch('src/js/*', ['js']);
 });
 
 gulp.task('js', () => {
-    let vinyl = gulp.src('public/js/index.js');
+    let vinyl = gulp.src('src/js/index.js');
 
     if (!argv.c) {
         vinyl = vinyl.pipe(sourcemaps.init());
@@ -39,21 +40,27 @@ gulp.task('js', () => {
             babelCompiler.end();
         });
 
-    vinyl = vinyl.pipe(babelCompiler)
+    vinyl = vinyl
+        .pipe(babelCompiler)
         .pipe(uglify({
             compress: !!argv.c,
             mangle: !!argv.c
         }));
 
-    if (!argv.c) {
+    if (!!argv.c) {
         vinyl = vinyl.pipe(sourcemaps.write('.'));
     }
 
     vinyl.pipe(gulp.dest('public/assets'));
 });
 
+gulp.task('sass', () => {
+    let vinyl = gulp.src('./src/scss/*.scss')
+        .pipe(sass())
+});
+
 gulp.task('less', () => {
-    let vinyl = gulp.src('public/less/*.less')
+    let vinyl = gulp.src('src/less/*.less')
         .pipe(less())
         .pipe(uncss({
             html: ['public/*.html']

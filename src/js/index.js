@@ -1,32 +1,20 @@
-(function(i, s, o, g, r, a, m) {
-    i['GoogleAnalyticsObject'] = r;
-    i[r] = i[r] || function() {
-        (i[r].q = i[r].q || []).push(arguments)
-    },
-    i[r].l = 1 * new Date();
-    a = s.createElement(o),
-    m = s.getElementsByTagName(o)[0];
-    a.async = 1;
-    a.src = g;
-    m.parentNode.insertBefore(a, m)
-})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 ga('create', 'UA-25609352-3', 'auto');
 ga('send', 'pageview');
 
-function userSwitch(id, positions, callback) {
-    let index = 0;
-    let set = positions[index];
-
-    document.getElementById(id).addEventListener('click', function(){
-        index = index >= (positions.length - 1)
-            ? 0 : index + 1;
-        set = callback(positions[index]);
-    })
-
-    return () => set;
-}
-
 (() => {
+    function userSwitch(id, positions, callback) {
+        let index = 0;
+
+        document.getElementById(id).addEventListener('click', function(){
+            index = index >= (positions.length - 1)
+                ? 0 : index + 1;
+        })
+    }
+
     const container = document.getElementsByTagName('footer')[0];
     const canvas = document.getElementsByTagName('canvas')[0];
     const context = canvas.getContext('2d');
@@ -37,7 +25,7 @@ function userSwitch(id, positions, callback) {
         phase: () => {},
     };
 
-    const colorSwitch = userSwitch('color', [0, 1, 2], value => {
+    userSwitch('color', [0, 1, 2], value => {
         if (value == 0) {
             defaults.phase = () => null
         }
@@ -49,7 +37,7 @@ function userSwitch(id, positions, callback) {
         }
     });
 
-    const shapeSwitch = userSwitch('shape', ['circle', 'triangle', 'bar'], value => {
+    userSwitch('shape', ['circle', 'triangle', 'bar'], value => {
         defaults.shape = value;
     })
 
@@ -65,6 +53,28 @@ function userSwitch(id, positions, callback) {
               parseInt(Math.sin(0.0314 * state.y + 0 + state.phase) * 127 + 128) +','+
               parseInt(Math.sin(0.0314 * state.y + 4 + state.phase) * 127 + 128)
             : state.color;
+    }
+
+    const renderers = {
+        'circle': (state) => {
+            context.arc(state.x, state.y - state.radius, state.radius, 0, 6.2832);
+        },
+        'triangle': (state) => {
+            const len = state.radius * 3;
+
+            context.moveTo(state.x, state.y)
+            context.lineTo(state.x + (len/2), state.y-(len*.89))
+            context.lineTo(state.x + len, state.y)
+        },
+        'bar': (state) => {
+            const width = (state.radius * 2) + (state.alpha * 10);
+            const height = 120;
+
+            context.moveTo(state.x, state.y)
+            context.lineTo(state.x + width, state.y)
+            context.lineTo(state.x + width, state.y - height)
+            context.lineTo(state.x, state.y - height)
+        },
     }
 
     function update(state) {
@@ -94,28 +104,6 @@ function userSwitch(id, positions, callback) {
             phase: state.phase,
             shape: state.shape,
         };
-    }
-
-    const renderers = {
-        'circle': (state) => {
-            context.arc(state.x, state.y - state.radius, state.radius, 0, 6.2832);
-        },
-        'triangle': (state) => {
-            const len = state.radius * 3;
-
-            context.moveTo(state.x, state.y)
-            context.lineTo(state.x + (len/2), state.y-(len*.89))
-            context.lineTo(state.x + len, state.y)
-        },
-        'bar': (state) => {
-            const width = (state.radius * 2) + (state.alpha * 10);
-            const height = 120;
-
-            context.moveTo(state.x, state.y)
-            context.lineTo(state.x + width, state.y)
-            context.lineTo(state.x + width, state.y - height)
-            context.lineTo(state.x, state.y - height)
-        },
     }
 
     function draw(state) {
