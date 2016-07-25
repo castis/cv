@@ -1,7 +1,6 @@
 "use strict";
 
 const gulp = require('gulp');
-const concat = require('gulp-concat');
 const less = require('gulp-less');
 const sass = require('gulp-sass');
 const minifycss = require('gulp-minify-css');
@@ -13,15 +12,11 @@ const uncss = require('gulp-uncss');
 const gutil = require('gulp-util');
 const argv = require('yargs').argv
 
-gulp.task(
-    'default', ['less', 'js', 'watch', 'http']
-    // (argv.c
-    //     ? ['less', 'js']
-    //     : ['less', 'js', 'watch', 'http'])
-);
+gulp.task('default', ['less', 'js', 'watch', 'http']);
 
 gulp.task('watch', () => {
     gulp.watch(['src/less/*', 'public/*.html'], ['less']);
+    // gulp.watch(['src/scss/*', 'public/*.html'], ['scss']);
     gulp.watch('src/js/*', ['js']);
 });
 
@@ -57,6 +52,15 @@ gulp.task('js', () => {
 gulp.task('sass', () => {
     let vinyl = gulp.src('./src/scss/*.scss')
         .pipe(sass())
+        .pipe(uncss({
+            html: ['public/*.html']
+        }));
+
+    if (argv.c) {
+        vinyl = vinyl.pipe(minifycss())
+    }
+
+    vinyl.pipe(gulp.dest('public/assets'));
 });
 
 gulp.task('less', () => {

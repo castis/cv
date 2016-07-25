@@ -10,9 +10,10 @@ ga('send', 'pageview');
         let index = 0;
 
         document.getElementById(id).addEventListener('click', function(){
-            index = index >= (positions.length - 1)
+            index = index >= positions.length - 1
                 ? 0 : index + 1;
-        })
+            callback(positions[index]);
+        });
     }
 
     const container = document.getElementsByTagName('footer')[0];
