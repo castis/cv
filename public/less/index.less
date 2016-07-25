@@ -22,6 +22,7 @@ body {
     position: relative;
     padding: 0 0 20px;
     background: #0D1015 url('../img/bg.jpg') no-repeat center center;
+
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -240,41 +241,59 @@ main {
     }
 }
 
-canvas {
-    position: absolute;
-    top: 0;
-    // bottom: 0;
-    left: 0;
-    display: inline-block;
-    height: 120px;
-    // margin-top: 120px;
-    margin: 0 auto;
-    width: 100%;
-    z-index: 0;
-}
-
 footer {
     position: relative;
-    color: #666;
+    color: #fff;
     margin: 0 auto;
-    height: 50px;
+    height: 120px;
     line-height: 50px;
     z-index: 10;
 
     p {
+        position: relative;
         padding: 0;
-        float: left;
+        opacity: 0.4;
+        z-index: 10;
     }
 
     a {
-        color: #666;
+        color: #fff;
         text-decoration: underline;
     }
 
-    #switch {
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: inline-block;
+        height: 120px;
+        margin: 0 auto;
+        width: 100%;
+        z-index: 0;
+    }
+
+    .left {
+        float: left;
+    }
+
+    .right {
         float: right;
-        margin: 15px 10px 0 0;
-        opacity: 0.4;
-        pointer: cursor;
+        font-size: 2.0rem;
+        letter-spacing: 0.5rem;
+
+        .switch {
+            z-index: 10;
+            position: relative;
+            font-family: "FontAwesome";
+            cursor: pointer;
+            display: inline-block;
+
+            &.color:before { content: "\f0d0"; }
+            &.shape:before { content: "\f04b"; }
+        }
+    }
+
+    #config:before {
+        content: "\f013";
     }
 }
