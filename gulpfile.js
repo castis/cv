@@ -12,18 +12,14 @@ const uncss = require('gulp-uncss');
 const gutil = require('gulp-util');
 const argv = require('yargs').argv
 
-gulp.task('default', ['less', 'js', 'watch', 'http']);
+const compile = !!argv.c;
 
-gulp.task('watch', () => {
-    gulp.watch(['src/less/*', 'public/*.html'], ['less']);
-    // gulp.watch(['src/scss/*', 'public/*.html'], ['scss']);
-    gulp.watch('src/js/*', ['js']);
-});
+gulp.task('default', ['js', 'less', 'watch', 'serve']);
 
 gulp.task('js', () => {
     let vinyl = gulp.src('src/js/index.js');
 
-    if (!argv.c) {
+    if (!compile) {
         vinyl = vinyl.pipe(sourcemaps.init());
     }
 
@@ -38,11 +34,11 @@ gulp.task('js', () => {
     vinyl = vinyl
         .pipe(babelCompiler)
         .pipe(uglify({
-            compress: !!argv.c,
-            mangle: !!argv.c
+            compress: compile,
+            mangle: compile
         }));
 
-    if (!!argv.c) {
+    if (!compile) {
         vinyl = vinyl.pipe(sourcemaps.write('.'));
     }
 
@@ -56,7 +52,7 @@ gulp.task('sass', () => {
             html: ['public/*.html']
         }));
 
-    if (argv.c) {
+    if (compile) {
         vinyl = vinyl.pipe(minifycss())
     }
 
@@ -70,14 +66,20 @@ gulp.task('less', () => {
             html: ['public/*.html']
         }));
 
-    if (argv.c) {
+    if (compile) {
         vinyl = vinyl.pipe(minifycss())
     }
 
     vinyl.pipe(gulp.dest('public/assets'));
 });
 
-gulp.task('http', () => {
+gulp.task('watch', () => {
+    gulp.watch(['src/less/*', 'public/*.html'], ['less']);
+    // gulp.watch(['src/scss/*', 'public/*.html'], ['scss']);
+    gulp.watch('src/js/*', ['js']);
+});
+
+gulp.task('serve', () => {
     connect.server({
         root: ['public'],
         port: 8000,
