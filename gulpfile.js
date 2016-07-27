@@ -1,22 +1,25 @@
 "use strict";
 
+const argv = require('yargs').argv
+const babel = require('gulp-babel');
+const cleancss = require('gulp-clean-css');
+const concat = require('gulp-concat');
+const connect = require('gulp-connect');
 const gulp = require('gulp');
+const gutil = require('gulp-util');
 const sass = require('gulp-sass');
-const minifycss = require('gulp-minify-css');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
-const connect = require('gulp-connect');
-const babel = require('gulp-babel');
 const uncss = require('gulp-uncss');
-const gutil = require('gulp-util');
-const argv = require('yargs').argv
 
 const compile = !!argv.c;
 
 gulp.task('default', ['js', 'sass', 'watch', 'serve']);
 
 gulp.task('js', () => {
-    let vinyl = gulp.src('src/js/index.js');
+    let vinyl = gulp
+        .src('src/js/*.js')
+        .pipe(concat('index.js'))
 
     if (!compile) {
         vinyl = vinyl.pipe(sourcemaps.init());
@@ -45,14 +48,16 @@ gulp.task('js', () => {
 });
 
 gulp.task('sass', () => {
-    let vinyl = gulp.src('./src/scss/*.scss')
+    let vinyl = gulp.src(['./src/scss/index.scss'])
         .pipe(sass())
         .pipe(uncss({
             html: ['public/*.html']
         }));
 
     if (compile) {
-        vinyl = vinyl.pipe(minifycss())
+        vinyl = vinyl.pipe(cleancss({
+            keepSpecialComments: 0,
+        }))
     }
 
     vinyl.pipe(gulp.dest('public/assets'));
