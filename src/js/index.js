@@ -26,6 +26,30 @@ ga('send', 'pageview');
         phase: () => {},
     };
 
+    const renderers = {
+        'circle': (state) => {
+            // the -radius to spawn above the fold
+            context.arc(state.x, state.y - state.radius, state.radius, 0, 6.2832);
+        },
+        'triangle': (state) => {
+            const len = state.radius * 3;
+
+            context.moveTo(state.x, state.y); // left
+            context.lineTo(state.x + (len/2), state.y-(len*.9)); // top
+            context.lineTo(state.x + len, state.y); // right
+        },
+        'bar': (state) => {
+            // width is tied to alpha so it shrinks as time goes on
+            const width = (state.radius * 2) + (state.alpha * 10);
+            const height = 120;
+
+            context.moveTo(state.x, state.y) // bottom left
+            context.lineTo(state.x + width, state.y) // bottom right
+            context.lineTo(state.x + width, state.y - height) // top right
+            context.lineTo(state.x, state.y - height) // top left
+        },
+    }
+
     userSwitch('color', [0, 1, 2], value => {
         if (value == 0) {
             defaults.phase = () => null
@@ -38,7 +62,7 @@ ga('send', 'pageview');
         }
     });
 
-    userSwitch('shape', ['circle', 'triangle', 'bar'], value => {
+    userSwitch('shape', Object.keys(renderers), value => {
         defaults.shape = value;
     })
 
@@ -54,28 +78,6 @@ ga('send', 'pageview');
               parseInt(Math.sin(0.0314 * state.y + 0 + state.phase) * 127 + 128) +','+
               parseInt(Math.sin(0.0314 * state.y + 4 + state.phase) * 127 + 128)
             : state.color;
-    }
-
-    const renderers = {
-        'circle': (state) => {
-            context.arc(state.x, state.y - state.radius, state.radius, 0, 6.2832);
-        },
-        'triangle': (state) => {
-            const len = state.radius * 3;
-
-            context.moveTo(state.x, state.y)
-            context.lineTo(state.x + (len/2), state.y-(len*.89))
-            context.lineTo(state.x + len, state.y)
-        },
-        'bar': (state) => {
-            const width = (state.radius * 2) + (state.alpha * 10);
-            const height = 120;
-
-            context.moveTo(state.x, state.y)
-            context.lineTo(state.x + width, state.y)
-            context.lineTo(state.x + width, state.y - height)
-            context.lineTo(state.x, state.y - height)
-        },
     }
 
     function update(state) {

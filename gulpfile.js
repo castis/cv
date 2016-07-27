@@ -1,7 +1,6 @@
 "use strict";
 
 const gulp = require('gulp');
-const less = require('gulp-less');
 const sass = require('gulp-sass');
 const minifycss = require('gulp-minify-css');
 const sourcemaps = require('gulp-sourcemaps');
@@ -14,7 +13,7 @@ const argv = require('yargs').argv
 
 const compile = !!argv.c;
 
-gulp.task('default', ['js', 'less', 'watch', 'serve']);
+gulp.task('default', ['js', 'sass', 'watch', 'serve']);
 
 gulp.task('js', () => {
     let vinyl = gulp.src('src/js/index.js');
@@ -59,23 +58,8 @@ gulp.task('sass', () => {
     vinyl.pipe(gulp.dest('public/assets'));
 });
 
-gulp.task('less', () => {
-    let vinyl = gulp.src('src/less/*.less')
-        .pipe(less())
-        .pipe(uncss({
-            html: ['public/*.html']
-        }));
-
-    if (compile) {
-        vinyl = vinyl.pipe(minifycss())
-    }
-
-    vinyl.pipe(gulp.dest('public/assets'));
-});
-
 gulp.task('watch', () => {
-    gulp.watch(['src/less/*', 'public/*.html'], ['less']);
-    // gulp.watch(['src/scss/*', 'public/*.html'], ['scss']);
+    gulp.watch(['src/scss/*', 'public/*.html'], ['sass']);
     gulp.watch('src/js/*', ['js']);
 });
 

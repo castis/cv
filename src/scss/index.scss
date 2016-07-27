@@ -1,0 +1,321 @@
+@import "vendor/bootstrap/bootstrap";
+@import "vendor/font-awesome/font-awesome";
+
+@charset "utf-8";
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800);
+
+@-webkit-viewport { width: device-width; }
+@-moz-viewport { width: device-width; }
+@-ms-viewport { width: device-width; }
+@-o-viewport { width: device-width; }
+@viewport { width: device-width; }
+
+$accent-one: #7AB4C0; // blue
+$accent-two: #FDCD7A; // orange
+
+@mixin transition($args...) {
+    -webkit-transition: $args;
+       -moz-transition: $args;
+         -o-transition: $args;
+            transition: $args;
+}
+
+@mixin background-size($size) {
+    -webkit-background-size: $size;
+       -moz-background-size: $size;
+         -o-background-size: $size;
+            background-size: $size;
+}
+
+body {
+    font-family: "Open Sans", Helvetica, Arial, Tahoma, sans-serif;
+    font-weight: 400;
+    font-size: 1em;
+    color: #363636;
+    position: relative;
+    padding: 0 0 20px;
+    background: #0D1015 url('../img/bg.jpg') no-repeat center center;
+
+    @include background-size(cover);
+}
+
+header {
+    margin-top: 30px;
+    text-align: center;
+
+    h1 {
+        margin: 20px 0 40px;
+        padding: 0;
+        font-size: 2.4em;
+        font-weight: 700;
+        letter-spacing: -1px;
+
+        span {
+            color: $accent-one;
+        }
+
+        &::first-line {
+            font-size: 1.5em;
+            letter-spacing: -0.03em;
+            font-weight: 800;
+            line-height: 1.5em;
+        }
+    }
+}
+
+.row {
+    margin-bottom: 15px;
+}
+
+.box {
+    position: relative;
+    z-index: 15;
+
+    h2 {
+        color: $accent-one;
+        font-size: 1.8em;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    p {
+        font-size: 1.3em;
+        line-height: 1.5em;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+}
+
+main {
+    margin-top: 20px;
+    background: rgb(255, 255, 255);
+    background: rgba(255, 255, 255, 0.95);
+    border: solid 1px #ccc;
+    position: relative;
+    z-index: 10;
+}
+
+.about {}
+
+.contact {
+    ul li {
+        font-size: 1.5em;
+        margin-top: 10px;
+
+        a {
+            font-weight: 700;
+            color: $accent-one;
+        }
+
+        &:before {
+            font-family: FontAwesome;
+            width: 20px;
+            margin-right: 5px;
+            text-align: center;
+            display: inline-block;
+            color: #AAAAAA;
+        }
+        &:nth-child(1):before {
+            content:"\f0e0";
+        }
+        &:nth-child(2):before {
+            content:"\f0e1";
+        }
+        &:nth-child(3):before {
+            content:"\f16c";
+        }
+    }
+}
+
+.experience {
+    .job {
+        // .clearfix();
+        @include clearfix();
+
+        margin-bottom: 20px;
+
+        > div { padding: 0; }
+
+        .where {
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+
+        .year {
+            font-size: 1.3em;
+            opacity: 0.7;
+        }
+
+        .profession {
+            font-size: 1.6em;
+            font-weight: bold;
+        }
+
+        .description {
+            font-size: 1.2em;
+            line-height: 1.5em;
+        }
+
+        h3 {
+            color: $accent-one;
+            font-size: 1.4em;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin: 5px 0 2px;
+        }
+
+        .tech {
+            display: block;
+            margin: 5px 0 0;
+            padding: 0;
+
+            li {
+                display: inline-block;
+                list-style: none;
+                background: $accent-two;
+                padding: 2px 5px;
+                margin: 0 0 3px;
+                color: #fff;
+
+                &:before {
+                    content: "\f00c";
+                    font-family: FontAwesome;
+                    font-style: normal;
+                    font-weight: normal;
+                    padding: 0 3px 0 0;
+                }
+            }
+        }
+    }
+}
+
+.handy_with {
+    li {
+        height: 30px;
+        background: $accent-two;
+        color: #fff;
+        padding: 5px 10px;
+        margin-bottom: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 1.3em;
+        font-weight: 600;
+
+        &.php { width: 90%; }
+        &.db { width: 80%; }
+        &.js { width: 80%; }
+        &.html { width: 75%; }
+        &.css { width: 70%; }
+        &.python { width: 60%; }
+        &.django { width: 40%; }
+    }
+}
+
+.hobbies {
+    float: right;
+
+    li {
+        color: #fff;
+        display: inline-block;
+        margin-right: 2px;
+        margin-bottom: 5px;
+        padding: 5px 10px 5px 25px;
+        background: $accent-two;
+        position: relative;
+        font-size: 1.2em;
+
+        &:before {
+            content: "\f004";
+            font-family: FontAwesome;
+            font-style: normal;
+            font-weight: normal;
+            position: absolute;
+            top: 6px;
+            left: 7px;
+        }
+    }
+}
+
+// remove side borders when container is full-width
+@media (max-width: $screen-xs-max) {
+    main { border-width: 1px 0; }
+}
+
+// pull it left when in tiny-mode
+@media (max-width: $screen-sm-max) {
+    .hobbies {
+        float: left !important;
+    }
+}
+
+footer {
+    position: relative;
+    color: #fff;
+    margin: 0 auto;
+    height: 120px;
+    line-height: 50px;
+    z-index: 10;
+    opacity: 0.2;
+    &:hover {
+        opacity: 1;
+    }
+    @include transition(opacity .25s linear);
+
+    p {
+        position: relative;
+        padding: 0;
+        opacity: 0.4;
+        z-index: 10;
+    }
+
+    a {
+        color: #fff;
+        text-decoration: underline;
+    }
+
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: inline-block;
+        height: 120px;
+        margin: 0 auto;
+        width: 100%;
+        z-index: 0;
+    }
+
+    .left {
+        float: left;
+    }
+
+    .right {
+        float: right;
+        font-size: 2.0rem;
+        letter-spacing: 0.5rem;
+
+        .switch {
+            z-index: 10;
+            position: relative;
+            font-family: FontAwesome;
+            cursor: pointer;
+            display: inline-block;
+
+            &:active {
+                position: relative;
+                top: 1px;
+            }
+
+            &.color:before { content: "\f0d0"; }
+            &.shape:before { content: "\f04b"; }
+        }
+    }
+
+    #config:before {
+        content: "\f013";
+    }
+}
