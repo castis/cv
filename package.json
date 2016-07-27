@@ -20,8 +20,5 @@
     "gulp-webserver": "^0.9.1",
     "node-sass": "^3.8.0",
     "yargs": "^4.8.1"
-  },
-  "dependencies": {
-    "gulp-concat": "^2.6.0"
   }
 }
