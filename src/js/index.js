@@ -1,16 +1,15 @@
-(() => {
+((w, d) => {
     function userSwitch(id, positions, callback) {
         let index = 0;
 
-        document.getElementById(id).addEventListener('click', function(){
-            index = index >= positions.length - 1
-                ? 0 : index + 1;
+        d.getElementById(id).addEventListener('click', function(){
+            index = index >= positions.length - 1 ? 0 : index + 1;
             callback(positions[index]);
         });
     }
 
-    const container = document.getElementsByTagName('footer')[0];
-    const canvas = document.getElementsByTagName('canvas')[0];
+    const container = d.getElementsByTagName('footer')[0];
+    const canvas = d.getElementsByTagName('canvas')[0];
     const context = canvas.getContext('2d');
     const particles = [];
 
@@ -28,7 +27,7 @@
             const len = state.radius * 3;
 
             context.moveTo(state.x, state.y); // left
-            context.lineTo(state.x + (len/2), state.y-(len*.9)); // top
+            context.lineTo(state.x + (len / 2), state.y - (len * 0.9)); // top
             context.lineTo(state.x + len, state.y); // right
         },
         'bar': (state) => {
@@ -36,16 +35,16 @@
             const width = (state.radius * 2) + (state.alpha * 10);
             const height = 120;
 
-            context.moveTo(state.x, state.y) // bottom left
-            context.lineTo(state.x + width, state.y) // bottom right
-            context.lineTo(state.x + width, state.y - height) // top right
-            context.lineTo(state.x, state.y - height) // top left
+            context.moveTo(state.x, state.y); // bottom left
+            context.lineTo(state.x + width, state.y); // bottom right
+            context.lineTo(state.x + width, state.y - height); // top right
+            context.lineTo(state.x, state.y - height); // top left
         },
-    }
+    };
 
     userSwitch('color', [0, 1, 2], value => {
-        if (value == 0) {
-            defaults.phase = () => null
+        if (value === 0) {
+            defaults.phase = () => null;
         }
         else if (value == 1) {
             defaults.phase = () => parseInt(Math.random() * 20);
@@ -57,20 +56,22 @@
 
     userSwitch('shape', Object.keys(renderers), value => {
         defaults.shape = value;
-    })
+    });
 
     // keep the canvas at the right size as the window changes
-    window.addEventListener('resize', () => {
+    w.addEventListener('resize', () => {
         canvas.width = container.clientWidth;
     });
-    window.dispatchEvent(new Event('resize'));
+    w.dispatchEvent(new Event('resize'));
 
     function color(state) {
-        return state.phase
-            ? parseInt(Math.sin(0.0314 * state.y + 2 + state.phase) * 127 + 128) +','+
-              parseInt(Math.sin(0.0314 * state.y + 0 + state.phase) * 127 + 128) +','+
-              parseInt(Math.sin(0.0314 * state.y + 4 + state.phase) * 127 + 128)
-            : state.color;
+        if (state.phase) {
+            return parseInt(Math.sin(0.0314 * state.y + 2 + state.phase) * 127 + 128) +','+
+                   parseInt(Math.sin(0.0314 * state.y + 0 + state.phase) * 127 + 128) +','+
+                   parseInt(Math.sin(0.0314 * state.y + 4 + state.phase) * 127 + 128);
+        }
+
+        return state.color;
     }
 
     function update(state) {
@@ -134,4 +135,4 @@
     }, 100);
 
     animate();
-})();
+})(window, document);
