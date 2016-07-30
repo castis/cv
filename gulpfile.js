@@ -1,31 +1,29 @@
-"use strict";
+var argv = require('yargs').argv;
+var babel = require('gulp-babel');
+var cleancss = require('gulp-clean-css');
+var concat = require('gulp-concat');
+var connect = require('gulp-connect');
+var gulp = require('gulp');
+var gutil = require('gulp-util');
+var sass = require('gulp-sass');
+var sourcemaps = require('gulp-sourcemaps');
+var uglify = require('gulp-uglify');
+var uncss = require('gulp-uncss');
 
-const argv = require('yargs').argv
-const babel = require('gulp-babel');
-const cleancss = require('gulp-clean-css');
-const concat = require('gulp-concat');
-const connect = require('gulp-connect');
-const gulp = require('gulp');
-const gutil = require('gulp-util');
-const sass = require('gulp-sass');
-const sourcemaps = require('gulp-sourcemaps');
-const uglify = require('gulp-uglify');
-const uncss = require('gulp-uncss');
-
-const compile = !!argv.c;
+var compile = !!argv.c;
 
 gulp.task('default', ['js', 'sass', 'watch', 'serve']);
 
 gulp.task('js', () => {
-    let vinyl = gulp
+    var vinyl = gulp
         .src('src/js/*.js')
-        .pipe(concat('index.js'))
+        .pipe(concat('index.js'));
 
     if (!compile) {
         vinyl = vinyl.pipe(sourcemaps.init());
     }
 
-    const babelCompiler = babel({
+    var babelCompiler = babel({
             presets: ['es2015', 'stage-0']
         }).on('error', (e) => {
             gutil.log(e);
@@ -48,8 +46,9 @@ gulp.task('js', () => {
 });
 
 gulp.task('sass', () => {
-    let vinyl = gulp.src(['./src/scss/index.scss'])
+    var vinyl = gulp.src(['./src/scss/index.scss'])
         .pipe(sass())
+        .on('error', gutil.log)
         .pipe(uncss({
             html: ['public/*.html']
         }));
@@ -57,7 +56,7 @@ gulp.task('sass', () => {
     if (compile) {
         vinyl = vinyl.pipe(cleancss({
             keepSpecialComments: 0,
-        }))
+        }));
     }
 
     vinyl.pipe(gulp.dest('public/assets'));
@@ -72,6 +71,7 @@ gulp.task('serve', () => {
     connect.server({
         root: ['public'],
         port: 8000,
-        livereload: true
+        livereload: true,
+        debug: true,
     });
 });

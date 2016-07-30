@@ -33,7 +33,6 @@ body {
     font-weight: 400;
     font-size: 1em;
     color: #363636;
-    position: relative;
     padding: 0 0 20px;
     background: #0D1015 url('../img/bg.jpg') no-repeat center center;
 
@@ -94,7 +93,7 @@ main {
     margin-top: 20px;
     background: rgb(255, 255, 255);
     background: rgba(255, 255, 255, 0.95);
-    border: solid 1px #ccc;
+    // border: solid 1px #ccc;
     position: relative;
     z-index: 10;
 }
@@ -133,42 +132,30 @@ main {
 
 .experience {
     .job {
-        // .clearfix();
         @include clearfix();
 
         margin-bottom: 20px;
 
-        > div { padding: 0; }
+        div { padding: 0; }
 
-        .where {
+        h3 {
             font-size: 1.4em;
             font-weight: bold;
+            padding: 0;
+            margin: 0;
         }
 
-        .year {
+        .col-sm-3 p {
             font-size: 1.3em;
             opacity: 0.7;
         }
 
-        .profession {
-            font-size: 1.6em;
-            font-weight: bold;
-        }
-
-        .description {
+        .col-sm-9 p {
             font-size: 1.2em;
             line-height: 1.5em;
         }
 
-        h3 {
-            color: $accent-one;
-            font-size: 1.4em;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin: 5px 0 2px;
-        }
-
-        .tech {
+        ul {
             display: block;
             margin: 5px 0 0;
             padding: 0;
