@@ -1,5 +1,5 @@
 ((w, d) => {
-    function userSwitch(id, positions, callback) {
+    function multiToggle(id, positions, callback) {
         let index = 0;
 
         d.getElementById(id).addEventListener('click', function(){
@@ -20,7 +20,7 @@
 
     const renderers = {
         'circle': (state) => {
-            // the -radius to spawn above the fold
+            // y - radius to spawn above the top border
             context.arc(state.x, state.y - state.radius, state.radius, 0, 6.2832);
         },
         'triangle': (state) => {
@@ -42,7 +42,11 @@
         },
     };
 
-    userSwitch('color', [0, 1, 2], value => {
+    multiToggle('shape', Object.keys(renderers), value => {
+        defaults.shape = value;
+    });
+
+    multiToggle('color', [0, 1, 2], value => {
         if (value === 0) {
             defaults.phase = () => null;
         }
@@ -52,10 +56,6 @@
         else if (value == 2) {
             defaults.phase = (x) => x / 180;
         }
-    });
-
-    userSwitch('shape', Object.keys(renderers), value => {
-        defaults.shape = value;
     });
 
     // keep the canvas at the right size as the window changes
