@@ -19,5 +19,8 @@
     "gulp-webserver": "^0.9.1",
     "node-sass": "^3.8.0",
     "yargs": "^4.8.1"
+  },
+  "dependencies": {
+    "gulp-if": "^2.0.1"
   }
 }

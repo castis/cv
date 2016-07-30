@@ -9,57 +9,52 @@ var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 var uncss = require('gulp-uncss');
+var gif = require('gulp-if');
+
 
 var compile = !!argv.c;
 
 gulp.task('default', ['js', 'sass', 'watch', 'serve']);
 
 gulp.task('js', () => {
-    var vinyl = gulp
-        .src('src/js/*.js')
-        .pipe(concat('index.js'));
+    var options = {
+        uglify: {
+            compress: true,
+            mangle: true,
+        },
+        babel: {
+            presets: ['es2015', 'stage-0'],
+        }
+    };
 
-    if (!compile) {
-        vinyl = vinyl.pipe(sourcemaps.init());
-    }
-
-    var babelCompiler = babel({
-            presets: ['es2015', 'stage-0']
-        }).on('error', (e) => {
+    var babelCompiler = babel(options.babel)
+        .on('error', (e) => {
             gutil.log(e);
             gutil.beep();
             babelCompiler.end();
         });
 
-    vinyl = vinyl
+    gulp.src('src/js/*.js')
+        .pipe(concat('index.js'))
+        .pipe(gif(!compile, sourcemaps.init()))
         .pipe(babelCompiler)
-        .pipe(uglify({
-            compress: compile,
-            mangle: compile
-        }));
-
-    if (!compile) {
-        vinyl = vinyl.pipe(sourcemaps.write('.'));
-    }
-
-    vinyl.pipe(gulp.dest('public/assets'));
+        .pipe(gif(compile, uglify(options.uglify)))
+        .pipe(gif(!compile, sourcemaps.write('.')))
+        .pipe(gulp.dest('public/assets'));
 });
 
 gulp.task('sass', () => {
-    var vinyl = gulp.src(['./src/scss/index.scss'])
+    var options = {
+        uncss: { html: ['public/*.html'] },
+        cleancss: { keepSpecialComments: 0 },
+    };
+
+    gulp.src(['./src/scss/index.scss'])
         .pipe(sass())
         .on('error', gutil.log)
-        .pipe(uncss({
-            html: ['public/*.html']
-        }));
-
-    if (compile) {
-        vinyl = vinyl.pipe(cleancss({
-            keepSpecialComments: 0,
-        }));
-    }
-
-    vinyl.pipe(gulp.dest('public/assets'));
+        .pipe(uncss(options.uncss))
+        .pipe(gif(compile, cleancss(options.cleancss)))
+        .pipe(gulp.dest('public/assets'));
 });
 
 gulp.task('watch', () => {
