@@ -93,7 +93,6 @@ main {
     margin-top: 20px;
     background: rgb(255, 255, 255);
     background: rgba(255, 255, 255, 0.95);
-    // border: solid 1px #ccc;
     position: relative;
     z-index: 10;
 }
@@ -118,12 +117,15 @@ main {
             display: inline-block;
             color: #AAAAAA;
         }
+
         &:nth-child(1):before {
             content:"\f0e0";
         }
+
         &:nth-child(2):before {
             content:"\f0e1";
         }
+
         &:nth-child(3):before {
             content:"\f16c";
         }

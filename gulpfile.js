@@ -24,7 +24,7 @@ gulp.task('js', () => {
         },
         babel: {
             presets: ['es2015', 'stage-0'],
-        }
+        },
     };
 
     var babelCompiler = babel(options.babel)
