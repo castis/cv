@@ -42,19 +42,17 @@
         },
     };
 
-    multiToggle('shape', Object.keys(renderers), value => {
-        defaults.shape = value;
-    });
+    multiToggle('shape', Object.keys(renderers), value => defaults.shape = value);
 
     multiToggle('color', [0, 1, 2], value => {
         if (value === 0) {
             defaults.phase = () => null;
         }
         else if (value == 1) {
-            defaults.phase = () => parseInt(Math.random() * 20);
+            defaults.phase = (x) => x / 180;
         }
         else if (value == 2) {
-            defaults.phase = (x) => x / 180;
+            defaults.phase = () => parseInt(Math.random() * 20);
         }
     });
 
