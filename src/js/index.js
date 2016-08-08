@@ -1,36 +1,41 @@
-((w, d) => {
+((window, document) => {
     function multiToggle(id, positions, callback) {
         let index = 0;
 
-        d.getElementById(id).addEventListener('click', function(){
+        document.getElementById(id).addEventListener('click', function(){
             index = index >= positions.length - 1 ? 0 : index + 1;
             callback(positions[index]);
         });
     }
 
-    const container = d.getElementsByTagName('footer')[0];
-    const canvas = d.getElementsByTagName('canvas')[0];
+    const container = document.getElementsByTagName('footer')[0];
+    const canvas = document.getElementsByTagName('canvas')[0];
     const context = canvas.getContext('2d');
     const particles = [];
 
     const defaults = {
-        shape: 'circle',
+        shape: 0,
         phase: () => {},
     };
 
-    const renderers = {
-        'circle': (state) => {
+    const renderers = [
+        // circle
+        (state) => {
             // y - radius to spawn above the top border
             context.arc(state.x, state.y - state.radius, state.radius, 0, 6.2832);
         },
-        'triangle': (state) => {
+
+        // triangle
+        (state) => {
             const len = state.radius * 3;
 
             context.moveTo(state.x, state.y); // left
             context.lineTo(state.x + (len / 2), state.y - (len * 0.9)); // top
             context.lineTo(state.x + len, state.y); // right
         },
-        'bar': (state) => {
+
+        // bar
+        (state) => {
             // width is tied to alpha so it shrinks as time goes on
             const width = (state.radius * 2) + (state.alpha * 10);
             const height = 120;
@@ -40,9 +45,9 @@
             context.lineTo(state.x + width, state.y - height); // top right
             context.lineTo(state.x, state.y - height); // top left
         },
-    };
+    ];
 
-    multiToggle('shape', Object.keys(renderers), value => defaults.shape = value);
+    multiToggle('shape', [0, 1, 2], value => defaults.shape = value);
 
     multiToggle('color', [0, 1, 2], value => {
         if (value === 0) {
@@ -57,10 +62,9 @@
     });
 
     // keep the canvas at the right size as the window changes
-    w.addEventListener('resize', () => {
-        canvas.width = container.clientWidth;
-    });
-    w.dispatchEvent(new Event('resize'));
+    const resize = () => canvas.width = container.clientWidth;
+    window.addEventListener('resize', resize);
+    resize();
 
     function color(state) {
         if (state.phase) {
@@ -121,7 +125,7 @@
     }
 
     // if we add all the particles at once then they come in waves
-    const maxBubbles = canvas.width / 5;
+    const maxBubbles = canvas.width / 9;
     const addBubbles = setInterval(() => {
         if (particles.length > maxBubbles) {
             return clearInterval(addBubbles);
