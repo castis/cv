@@ -8,6 +8,8 @@ const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
 const uncss = require('gulp-uncss');
 
+let build = false;
+
 
 gulp.task('default', () => {
     gulp.start(['js', 'sass']);
@@ -24,7 +26,10 @@ gulp.task('default', () => {
 });
 
 
-gulp.task('build', ['js', 'sass']);
+gulp.task('build', () => {
+    build = true;
+    gulp.start(['js', 'sass']);
+});
 
 
 gulp.task('js', () => {
@@ -55,14 +60,19 @@ gulp.task('sass', () => {
             errLogToConsole: false
         }).on('error', sass.logError);
 
-    gulp.src(['./src/scss/index.scss'])
+    let vinyl;
+    vinyl = gulp.src(['./src/scss/index.scss'])
         .pipe(sourcemaps.init())
         .pipe(sassCompiler)
-        .pipe(cleancss())
-        .pipe(uncss({
+        .pipe(cleancss());
+
+    if (build) {
+        vinyl = vinyl.pipe(uncss({
             html: ['./public/index.html'],
-        }))
-        .pipe(sourcemaps.write('.'))
+        }));
+    }
+
+    vinyl.pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('public/assets'))
         .pipe(connect.reload());
 });

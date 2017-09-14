@@ -27,18 +27,13 @@ $accent: #196dab;
             background-size: $size;
 }
 
-body, html {
-    height: 100%;
-}
-
 body {
     font-family: "Open Sans", Helvetica, Arial, Tahoma, sans-serif;
     font-weight: 400;
     font-size: 1em;
-    color: #eee;
+    color: #EEE;
     padding: 0 0 20px;
-    background: #263155 url('../img/thong-vo-2482.jpg') no-repeat center center;
-
+    background: white url('../img/thong-vo-2482.jpg') no-repeat center center;
     @include background-size(cover);
 }
 
