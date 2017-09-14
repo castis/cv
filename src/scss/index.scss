@@ -3,7 +3,7 @@
 
 @charset "utf-8";
 
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400);
 
 @-webkit-viewport { width: device-width; }
 @-moz-viewport { width: device-width; }
@@ -11,8 +11,7 @@
 @-o-viewport { width: device-width; }
 @viewport { width: device-width; }
 
-$accent-one: #196dab;
-$accent-two: #196dab;
+$accent: #196dab;
 
 @mixin transition($args...) {
     -webkit-transition: $args;
@@ -26,6 +25,10 @@ $accent-two: #196dab;
        -moz-background-size: $size;
          -o-background-size: $size;
             background-size: $size;
+}
+
+body, html {
+    height: 100%;
 }
 
 body {
@@ -49,11 +52,9 @@ header {
         font-size: 2.4em;
         font-weight: 700;
         letter-spacing: -1px;
-
-text-shadow: 2px 2px 5px #444;
+        text-shadow: 2px 2px 5px #444;
 
         span {
-            // color: $accent-one;
             color: #fcdccf;
         }
 
@@ -79,10 +80,9 @@ text-shadow: 2px 2px 5px #444;
     z-index: 15;
 
     h2 {
-        color: $accent-one;
+        color: $accent;
         font-size: 1.8em;
         font-weight: 700;
-        // text-transform: uppercase;
     }
 
     p {
@@ -113,7 +113,7 @@ main {
 
         a {
             font-weight: 700;
-            color: $accent-one;
+            color: $accent;
         }
 
         &:before {
@@ -140,6 +140,12 @@ main {
 }
 
 .experience {
+    hr {
+        border: solid 1px #AAA;
+        opacity: 0.3;
+        border-width: 1px 0 0;
+        width: 80%;
+    }
     .job {
         @include clearfix();
 
@@ -174,9 +180,10 @@ main {
             li {
                 display: inline-block;
                 list-style: none;
-                background: $accent-two;
-                padding: 2px 5px;
+                background: $accent;
+                padding: 4px 6px 4px 5px;
                 margin: 0 0 3px;
+                line-height: 1em;
                 color: #fff;
 
                 &:before {
@@ -184,7 +191,7 @@ main {
                     font-family: FontAwesome;
                     font-style: normal;
                     font-weight: normal;
-                    padding: 0 3px 0 0;
+                    padding: 0 4px 0 0;
                 }
             }
         }
@@ -194,7 +201,7 @@ main {
 .handy_with {
     li {
         height: 30px;
-        background: $accent-two;
+        background: $accent;
         color: #fff;
         padding: 5px 10px;
         margin-bottom: 5px;
@@ -209,8 +216,7 @@ main {
         &.js { width: 80%; }
         &.html { width: 75%; }
         &.css { width: 70%; }
-        &.python { width: 60%; }
-        &.django { width: 40%; }
+        &.python { width: 70%; }
     }
 }
 
@@ -223,7 +229,7 @@ main {
         margin-right: 2px;
         margin-bottom: 5px;
         padding: 5px 10px 5px 25px;
-        background: $accent-two;
+        background: $accent;
         position: relative;
         font-size: 1.2em;
 
@@ -258,10 +264,7 @@ footer {
     height: 120px;
     line-height: 50px;
     z-index: 10;
-    // opacity: 0.2;
-    &:hover {
-        opacity: 1;
-    }
+
     @include transition(opacity .25s linear);
 
     p {
