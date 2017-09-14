@@ -1,33 +1,30 @@
-var argv = require('yargs').argv;
-var babel = require('gulp-babel');
-var cleancss = require('gulp-clean-css');
-var concat = require('gulp-concat');
-var connect = require('gulp-connect');
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var sass = require('gulp-sass');
-var sourcemaps = require('gulp-sourcemaps');
-var uglify = require('gulp-uglify');
-var uncss = require('gulp-uncss');
-var gif = require('gulp-if');
+const argv = require('yargs').argv;
+const babel = require('gulp-babel');
+const cleancss = require('gulp-clean-css');
+const concat = require('gulp-concat');
+const connect = require('gulp-connect');
+const gulp = require('gulp');
+const gutil = require('gulp-util');
+const sass = require('gulp-sass');
+const sourcemaps = require('gulp-sourcemaps');
+const uglify = require('gulp-uglify');
+const uncss = require('gulp-uncss');
+const gif = require('gulp-if');
 
 
-var compile = !!argv.c;
+let compile = !!argv.c;
 
 gulp.task('default', ['js', 'sass', 'watch', 'serve']);
 
-gulp.task('js', () => {
-    var options = {
-        uglify: {
-            compress: true,
-            mangle: true,
-        },
-        babel: {
-            presets: ['es2015', 'stage-0'],
-        },
-    };
+gulp.task('build', () => {
+    compile = true;
+    gulp.start(['js', 'sass']);
+})
 
-    var babelCompiler = babel(options.babel)
+gulp.task('js', () => {
+    const babelCompiler = babel({
+            presets: ['es2015', 'stage-0'],
+        })
         .on('error', (e) => {
             gutil.log(e);
             gutil.beep();
@@ -38,22 +35,24 @@ gulp.task('js', () => {
         .pipe(concat('index.js'))
         .pipe(gif(!compile, sourcemaps.init()))
         .pipe(babelCompiler)
-        .pipe(gif(compile, uglify(options.uglify)))
+        .pipe(gif(compile, uglify({
+            compress: true,
+            mangle: true,
+        })))
         .pipe(gif(!compile, sourcemaps.write('.')))
         .pipe(gulp.dest('public/assets'));
 });
 
 gulp.task('sass', () => {
-    var options = {
-        uncss: { html: ['public/*.html'] },
-        cleancss: { keepSpecialComments: 0 },
-    };
-
     gulp.src(['./src/scss/index.scss'])
         .pipe(sass())
         .on('error', gutil.log)
-        .pipe(uncss(options.uncss))
-        .pipe(gif(compile, cleancss(options.cleancss)))
+        .pipe(uncss({
+            html: ['./public/index.html']
+        }))
+        .pipe(gif(compile, cleancss({
+            specialComments: 0,
+        })))
         .pipe(gulp.dest('public/assets'));
 });
 

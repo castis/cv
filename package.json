@@ -1,24 +1,20 @@
 {
-  "name": "cv",
-  "version": "1.0.0",
-  "description": "Personal CV",
-  "author": "Daniel Sibitzky",
-  "devDependencies": {
-    "babel-preset-es2015": "^6.9.0",
-    "babel-preset-stage-0": "^6.5.0",
-    "gulp": "~3.9.0",
-    "gulp-babel": "^6.1.2",
-    "gulp-clean-css": "^2.0.12",
-    "gulp-concat": "~2.6.0",
-    "gulp-connect": "^4.1.0",
-    "gulp-if": "^2.0.1",
-    "gulp-minify-css": "~1.2.1",
-    "gulp-sass": "^2.3.2",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-uglify": "~1.4.2",
+  "dependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.0",
+    "gulp-clean-css": "^3.8.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-connect": "^5.0.0",
+    "gulp-if": "^2.0.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.1",
+    "gulp-uglify": "^3.0.0",
     "gulp-uncss": "^1.0.6",
-    "gulp-webserver": "^0.9.1",
-    "node-sass": "^3.8.0",
-    "yargs": "^4.8.1"
+    "gulp-util": "^3.0.8",
+    "yargs": "^8.0.2"
   }
 }

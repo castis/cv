@@ -11,8 +11,8 @@
 @-o-viewport { width: device-width; }
 @viewport { width: device-width; }
 
-$accent-one: #7AB4C0; // blue
-$accent-two: #FDCD7A; // orange
+$accent-one: #196dab;
+$accent-two: #196dab;
 
 @mixin transition($args...) {
     -webkit-transition: $args;
@@ -32,9 +32,9 @@ body {
     font-family: "Open Sans", Helvetica, Arial, Tahoma, sans-serif;
     font-weight: 400;
     font-size: 1em;
-    color: #363636;
+    color: #eee;
     padding: 0 0 20px;
-    background: #0D1015 url('../img/bg.jpg') no-repeat center center;
+    background: #263155 url('../img/thong-vo-2482.jpg') no-repeat center center;
 
     @include background-size(cover);
 }
@@ -50,8 +50,11 @@ header {
         font-weight: 700;
         letter-spacing: -1px;
 
+text-shadow: 2px 2px 5px #444;
+
         span {
-            color: $accent-one;
+            // color: $accent-one;
+            color: #fcdccf;
         }
 
         &::first-line {
@@ -61,6 +64,10 @@ header {
             line-height: 1.5em;
         }
     }
+}
+
+.container {
+    color: #004;
 }
 
 .row {
@@ -75,7 +82,7 @@ header {
         color: $accent-one;
         font-size: 1.8em;
         font-weight: 700;
-        text-transform: uppercase;
+        // text-transform: uppercase;
     }
 
     p {
@@ -251,7 +258,7 @@ footer {
     height: 120px;
     line-height: 50px;
     z-index: 10;
-    opacity: 0.2;
+    // opacity: 0.2;
     &:hover {
         opacity: 1;
     }
@@ -262,6 +269,7 @@ footer {
         padding: 0;
         opacity: 0.4;
         z-index: 10;
+        color: #fff;
     }
 
     a {
