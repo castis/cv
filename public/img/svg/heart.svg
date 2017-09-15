@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300px" height="300px" viewBox="0 0 17 20" xml:space="preserve">
+<polyline points="5,5 9,10 13,5" stroke="red" stroke-width="10" stroke-linecap="round" fill="none" stroke-linejoin="miter"/>
+</svg>

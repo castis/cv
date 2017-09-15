@@ -31,7 +31,7 @@ const renderers = [
         const len = state.radius * 3;
 
         context.moveTo(state.x, state.y); // left
-        context.lineTo(state.x + (len / 2), state.y - (len * 0.9)); // top
+        context.lineTo(state.x + (len / 2), state.y + (len * 0.9)); // bottom
         context.lineTo(state.x + len, state.y); // right
     },
 
@@ -67,11 +67,11 @@ const resize = () => canvas.width = container.clientWidth;
 window.addEventListener('resize', resize);
 resize();
 
-const phase = (i) => parseInt(Math.sin(0.0314 * state.y + 2 + state.phase) * 127 + 128);
-
 function color(state) {
     if (state.phase) {
-        return phase(2) +','+ phase(0) +','+ phase(4);
+        return parseInt(Math.sin(0.0314 * state.y + 2 + state.phase) * 127 + 128) +','+
+               parseInt(Math.sin(0.0314 * state.y + 0 + state.phase) * 127 + 128) +','+
+               parseInt(Math.sin(0.0314 * state.y + 4 + state.phase) * 127 + 128);
     }
 
     return state.color;

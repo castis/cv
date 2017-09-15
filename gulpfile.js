@@ -3,6 +3,7 @@ const cleancss = require('gulp-clean-css');
 const concat = require('gulp-concat');
 const connect = require('gulp-connect');
 const gulp = require('gulp');
+const htmlmin = require('gulp-htmlmin');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
@@ -12,10 +13,11 @@ let build = false;
 
 
 gulp.task('default', () => {
-    gulp.start(['js', 'sass']);
+    gulp.start(['js', 'sass', 'html']);
 
     gulp.watch(['src/scss/*', 'public/*.html'], ['sass']);
     gulp.watch('src/js/*', ['js']);
+    gulp.watch('src/index.html', ['html']);
 
     connect.server({
         root: ['public'],
@@ -28,7 +30,7 @@ gulp.task('default', () => {
 
 gulp.task('build', () => {
     build = true;
-    gulp.start(['js', 'sass']);
+    gulp.start(['js', 'sass', 'html']);
 });
 
 
@@ -75,4 +77,12 @@ gulp.task('sass', () => {
     vinyl.pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('public/assets'))
         .pipe(connect.reload());
+});
+
+gulp.task('html', () => {
+    gulp.src('src/index.html')
+        .pipe(htmlmin({
+            collapseWhitespace: true
+        }))
+        .pipe(gulp.dest('public'));
 });
