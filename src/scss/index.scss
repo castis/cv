@@ -26,6 +26,10 @@ $accent: #196dab;
             background-size: $size;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     font-family: "Open Sans", Helvetica, Arial, Tahoma, sans-serif;
     font-weight: 400;
