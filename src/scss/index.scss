@@ -26,16 +26,14 @@ $accent: #196dab;
             background-size: $size;
 }
 
-html {
-    height: 100%;
-}
-
 body {
+    min-height: 100%;
+
     font-family: "Open Sans", Helvetica, Arial, Tahoma, sans-serif;
     font-weight: 400;
     font-size: 1em;
     color: #EEE;
-    padding: 0 0 20px;
+
     background: white url('../img/thong-vo-2482.jpg') no-repeat center center;
     @include background-size(cover);
 }
