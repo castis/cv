@@ -29,10 +29,11 @@ const renderers = [
     // triangle
     (state) => {
         const len = state.radius * 3;
+        const y = state.y - len; // make sure it forms above the top border
 
-        context.moveTo(state.x, state.y); // left
-        context.lineTo(state.x + (len / 2), state.y + (len * 0.9)); // bottom
-        context.lineTo(state.x + len, state.y); // right
+        context.moveTo(state.x, y); // left
+        context.lineTo(state.x + (len / 2), y + (len * 0.9)); // bottom
+        context.lineTo(state.x + len, y); // right
     },
 
     // bar

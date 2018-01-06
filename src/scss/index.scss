@@ -10,7 +10,7 @@
 @-o-viewport { width: device-width; }
 @viewport { width: device-width; }
 
-$accent: lighten(#253157, 25);
+$accent: #236b77;
 
 @mixin transition($args...) {
     -webkit-transition: $args;
