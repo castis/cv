@@ -10,7 +10,7 @@
 @-o-viewport { width: device-width; }
 @viewport { width: device-width; }
 
-$accent: #196dab;
+$accent: lighten(#253157, 25);
 
 @mixin transition($args...) {
     -webkit-transition: $args;
@@ -34,8 +34,13 @@ body {
     font-size: 1em;
     color: #EEE;
 
-    background: white url('../img/thong-vo-2482.jpg') no-repeat center center;
+    background: #253157 url('../img/bg.jpg') no-repeat center bottom;
     @include background-size(cover);
+
+    // remove side borders when container is full-width
+    @media (max-width: $screen-xs-max) {
+        @include background-size(contain);
+    }
 }
 
 header {
@@ -265,9 +270,14 @@ footer {
     a {
         color: #fff;
         text-decoration: underline;
+        cursor: pointer;
 
         &:hover {
             color: #fff;
+        }
+
+        &:focus {
+            color: #EEE;
         }
     }
 
@@ -292,8 +302,6 @@ footer {
         letter-spacing: 0.5rem;
 
         .switch {
-            z-index: 10;
-            position: relative;
             cursor: pointer;
             display: inline-block;
             fill: #FFF;
@@ -305,7 +313,7 @@ footer {
 
             &:active {
                 position: relative;
-                top: 1px;
+                top: 2px;
             }
         }
     }
@@ -327,13 +335,11 @@ svg {
         fill: none;
     }
     #brush {
-        stroke: #fff;
-        stroke-width: 2px;
-        fill: none;
+        fill: #fff;
     }
     #shapes {
         stroke: #fff;
-        stroke-width: 5px;
-        fill: none;
+        stroke-width: 3px;
+        // fill: #fff;
     }
 }

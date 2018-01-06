@@ -88,7 +88,7 @@ function update(state) {
             alpha: 0.6 + Math.random() * 0.3,
             radius: radius,
             velocity: Math.floor(Math.random() * 1.5) + 1,
-            color: '100,100,100',
+            color: '50,50,50',
             phase: defaults.phase(x),
             shape: defaults.shape,
         };
