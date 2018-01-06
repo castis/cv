@@ -170,7 +170,7 @@ main {
                 display: inline-block;
                 list-style: none;
                 background: $accent;
-                padding: 4px 6px 4px 5px;
+                padding: 4px 6px 5px 5px;
                 margin: 0 2px 3px;
                 line-height: 1em;
                 color: #fff;
@@ -181,10 +181,9 @@ main {
 
 .handy_with {
     li {
-        height: 30px;
         background: $accent;
         color: #fff;
-        padding: 5px 10px 5px 10px;
+        padding: 5px 10px;
         margin-bottom: 5px;
         white-space: nowrap;
         overflow: hidden;
@@ -204,9 +203,7 @@ main {
             width: 10px;
             height: 10px;
             fill: #FFF;
-            position: relative;
             margin: 0 8px 0 0;
-            top: 1px;
             opacity: 0.6;
         }
     }
