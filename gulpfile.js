@@ -62,17 +62,14 @@ gulp.task('sass', () => {
         errLogToConsole: false
     }).on('error', sass.logError);
 
-    let vinyl;
-    vinyl = gulp.src(['./src/scss/index.scss'])
+    gulp.src(['./src/scss/index.scss'])
         .pipe(sourcemaps.init())
         .pipe(sassCompiler)
         .pipe(cleancss());
-
-    // vinyl = vinyl.pipe(uncss({
-    //     html: ['./public/index.html'],
-    // }));
-
-    vinyl.pipe(sourcemaps.write('.'))
+        .pipe(uncss({
+            html: ['./public/index.html'],
+        }))
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('public/assets'))
         .pipe(connect.reload());
 });
