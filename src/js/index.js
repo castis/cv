@@ -55,10 +55,10 @@ multiToggle('color', [0, 1, 2], value => {
         defaults.phase = () => null;
     }
     else if (value == 1) {
-        defaults.phase = (x) => x / 180;
+        defaults.phase = () => parseInt(Math.random() * 20);
     }
     else if (value == 2) {
-        defaults.phase = () => parseInt(Math.random() * 20);
+        defaults.phase = (x) => x / 180;
     }
 });
 

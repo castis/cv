@@ -184,7 +184,7 @@ main {
         height: 30px;
         background: $accent;
         color: #fff;
-        padding: 5px 10px;
+        padding: 5px 10px 5px 10px;
         margin-bottom: 5px;
         white-space: nowrap;
         overflow: hidden;
@@ -205,7 +205,7 @@ main {
             height: 10px;
             fill: #FFF;
             position: relative;
-            margin: 0 6px 0 0;
+            margin: 0 8px 0 0;
             top: 1px;
             opacity: 0.6;
         }
@@ -224,7 +224,7 @@ main {
         li {
             color: #fff;
             margin: 0 5px 5px 0;
-            padding: 5px 7px;
+            padding: 5px 8px;
             background: $accent;
             font-size: 1.2em;
             letter-spacing: 0.03rem;
@@ -232,7 +232,7 @@ main {
             svg {
                 width: 10px;
                 height: 10px;
-                margin: 0 5px 0 0;
+                margin: 0 7px 0 0;
                 position: relative;
                 top: 1px;
                 opacity: 0.4;
@@ -261,7 +261,6 @@ footer {
     p {
         position: relative;
         padding: 0;
-        // opacity: 0.4;
         z-index: 10;
         color: #fff;
     }
@@ -323,6 +322,11 @@ svg {
         stroke-width: 10px;
         stroke-linecap: round;
         stroke-linejoin: miter;
+        fill: none;
+    }
+    #shapes {
+        stroke: #fff;
+        stroke-width: 5px;
         fill: none;
     }
 }
