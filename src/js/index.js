@@ -9,8 +9,8 @@ function multiToggle(id, positions, callback) {
     });
 }
 
-const container = document.getElementsByTagName('footer')[0];
-const canvas = document.getElementsByTagName('canvas')[0];
+const container = document.querySelector('footer');
+const canvas = container.querySelector('canvas');
 const context = canvas.getContext('2d');
 const particles = [];
 
@@ -138,3 +138,17 @@ const addBubbles = setInterval(() => {
 }, 100);
 
 animate();
+
+console.log(`%c Also, my favorite Disney movie is
+                    ..    d$P              $$      '$b
+                    z$"   $$F               4$$      $$L
+                    $$   4$$                 $$.     4$$    ,z$P
+                    $$   $$'                 $$F      $$   $$$P
+                   $$$   $$                  $$f      $$   ""'
+                  $'$$; 4$F      .,_         $$'      $$
+                .$' ?$L 4$'   .d$" '?    zee $$   ,ec $F  d$F z$$   ,ce,.
+              .d$ee. $$ 4$'  d$"   z$  $$"  .$f.d$"  4$  4$$ 4$$P z$P?$$$
+             d$" "?$$d$,'$  $$F   z$f,$$    $$.$$    $P  $$% $$$4$"   4$$
+.$"%.     ,p$"        $$ $ J$$  z$$$ $$"  .$$ $$"  .$$C 4$P  $$$"     $$f
+'$.     ,d$b****q,     $.$ $$$$$P $$.$$b.$P4$ $$L.$P4$F $P  4$P     .$$"
+ '?$$g$P"        "     'b' '??"   "?"^?F"   $$'?PF"  $$ "   P'     eF`, "font-family:monospace");
