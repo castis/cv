@@ -304,6 +304,7 @@ footer {
             height: 30px;
             margin-top: 12px;
             opacity: 0.5;
+            text-align: center;
 
             &:active {
                 position: relative;
@@ -326,6 +327,11 @@ svg {
         stroke-width: 10px;
         stroke-linecap: round;
         stroke-linejoin: miter;
+        fill: none;
+    }
+    #brush {
+        stroke: #fff;
+        stroke-width: 2px;
         fill: none;
     }
     #shapes {
