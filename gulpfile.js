@@ -16,8 +16,8 @@ gulp.task('default', () => {
     gulp.start(['js', 'sass', 'html']);
 
     gulp.watch(['src/scss/*', 'public/*.html'], ['sass']);
-    gulp.watch('src/js/*', ['js']);
-    gulp.watch('src/index.html', ['html']);
+    gulp.watch(['src/js/*'], ['js']);
+    gulp.watch(['src/index.html'], ['html']);
 
     connect.server({
         root: ['public'],
@@ -36,11 +36,11 @@ gulp.task('build', () => {
 
 gulp.task('js', () => {
     const babelCompiler = babel({
-            presets: ['es2015', 'stage-0'],
-        }).on('error', (err) => {
-            console.log(err.message);
-            babelCompiler.end();
-        });
+        presets: ['es2015', 'stage-0'],
+    }).on('error', (err) => {
+        console.log(err.message);
+        babelCompiler.end();
+    });
 
     gulp.src('src/js/*.js')
         .pipe(sourcemaps.init())
@@ -58,9 +58,9 @@ gulp.task('js', () => {
 
 gulp.task('sass', () => {
     const sassCompiler = sass({
-            style: 'compressed',
-            errLogToConsole: false
-        }).on('error', sass.logError);
+        style: 'compressed',
+        errLogToConsole: false
+    }).on('error', sass.logError);
 
     let vinyl;
     vinyl = gulp.src(['./src/scss/index.scss'])
@@ -68,11 +68,9 @@ gulp.task('sass', () => {
         .pipe(sassCompiler)
         .pipe(cleancss());
 
-    if (build) {
-        vinyl = vinyl.pipe(uncss({
-            html: ['./public/index.html'],
-        }));
-    }
+    // vinyl = vinyl.pipe(uncss({
+    //     html: ['./public/index.html'],
+    // }));
 
     vinyl.pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('public/assets'))
