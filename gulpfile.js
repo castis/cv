@@ -65,7 +65,7 @@ gulp.task('sass', () => {
     gulp.src(['./src/scss/index.scss'])
         .pipe(sourcemaps.init())
         .pipe(sassCompiler)
-        .pipe(cleancss());
+        .pipe(cleancss())
         .pipe(uncss({
             html: ['./public/index.html'],
         }))
