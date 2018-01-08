@@ -63,42 +63,58 @@ header {
     }
 }
 
-.row {
-    margin-bottom: 15px;
-}
-
-.box {
-    position: relative;
-    z-index: 15;
-
-    h2 {
-        color: $accent;
-        font-size: 1.8em;
-        font-weight: 700;
-    }
-
-    p {
-        font-size: 1.3em;
-        line-height: 1.5em;
-    }
-
-    ul {
-        list-style: none;
-        padding: 0;
-    }
-}
-
 main {
-    margin-top: 20px;
     color: #004;
     background: rgba(255, 255, 255, 0.95);
     position: relative;
     z-index: 10;
+    display: flex;
+    flex-direction: row;
 
     // remove side borders when container is full-width
     @media (max-width: $screen-xs-max) {
-        border-width: 1px 0;
         margin: 20px 10px 0 !important;
+        flex-direction: column;
+    }
+
+    .column {
+        display: flex;
+        flex-direction: column;
+
+        .box:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+
+    .box {
+        position: relative;
+        z-index: 15;
+        margin-bottom: 20px;
+
+        h2 {
+            color: $accent;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        p {
+            font-size: 1.3em;
+            line-height: 1.5em;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+    }
+
+    .left {
+        flex: 3;
+        margin-right: 40px;
+    }
+
+    .right {
+        flex: 2;
     }
 }
 
@@ -106,9 +122,10 @@ main {
 
 .contact {
     ul {
-        list-style: disc;
+        list-style: disc !important;
         margin: 0 0 0 20px;
         color: $accent;
+
         li {
             font-size: 1.5em;
             margin-top: 10px;
@@ -179,7 +196,7 @@ main {
     }
 }
 
-.handy_with {
+.handy {
     li {
         background: $accent;
         color: #fff;
@@ -242,6 +259,29 @@ main {
 @media (max-width: $screen-sm-max) {
     .hobbies {
         float: left !important;
+    }
+
+    .column {
+
+    }
+}
+
+.robot {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+
+    @media (max-width: $screen-xs-max) {
+        display: none;
+    }
+
+    svg {
+        fill: #fff;
+        text-align: center;
+        width: 100px;
+        height: 100px;
+        margin: auto auto auto auto;
     }
 }
 
@@ -335,6 +375,5 @@ svg {
     #shapes {
         stroke: #fff;
         stroke-width: 3px;
-        // fill: #fff;
     }
 }

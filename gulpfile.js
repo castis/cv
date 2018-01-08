@@ -8,17 +8,23 @@ const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
 const uncss = require('gulp-uncss');
+const argv = require('yargs').argv;
 
-let build = false;
-
+const build = argv.build === true;
 
 gulp.task('default', () => {
     gulp.start(['js', 'sass', 'html']);
 
-    gulp.watch(['src/scss/*', 'public/*.html'], ['sass']);
-    gulp.watch(['src/js/*'], ['js']);
-    gulp.watch(['src/index.html'], ['html']);
+    if (!build) {
+        gulp.watch(['src/scss/*', 'public/*.html'], ['sass']);
+        gulp.watch(['src/js/*'], ['js']);
+        gulp.watch(['src/index.html'], ['html']);
 
+        gulp.start(['preview']);
+    }
+});
+
+gulp.task('preview', () => {
     connect.server({
         root: ['public'],
         port: 8000,
@@ -26,13 +32,6 @@ gulp.task('default', () => {
         debug: true,
     });
 });
-
-
-gulp.task('build', () => {
-    build = true;
-    gulp.start(['js', 'sass', 'html']);
-});
-
 
 gulp.task('js', () => {
     const babelCompiler = babel({
@@ -55,21 +54,25 @@ gulp.task('js', () => {
         .pipe(connect.reload());
 });
 
-
 gulp.task('sass', () => {
     const sassCompiler = sass({
         style: 'compressed',
         errLogToConsole: false
     }).on('error', sass.logError);
 
-    gulp.src(['./src/scss/index.scss'])
+    let vinyl;
+    vinyl = gulp.src(['./src/scss/index.scss'])
         .pipe(sourcemaps.init())
         .pipe(sassCompiler)
-        .pipe(cleancss())
-        .pipe(uncss({
+        .pipe(cleancss());
+
+    if (build) {
+        vinyl = vinyl.pipe(uncss({
             html: ['./public/index.html'],
-        }))
-        .pipe(sourcemaps.write('.'))
+        }));
+    }
+
+    vinyl.pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('public/assets'))
         .pipe(connect.reload());
 });
