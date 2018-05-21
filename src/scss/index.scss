@@ -10,14 +10,7 @@
 @-o-viewport { width: device-width; }
 @viewport { width: device-width; }
 
-$accent: #236b77;
-
-@mixin transition($args...) {
-    -webkit-transition: $args;
-       -moz-transition: $args;
-         -o-transition: $args;
-            transition: $args;
-}
+$accent: #01008b;
 
 @mixin background-size($size) {
     -webkit-background-size: $size;
@@ -25,6 +18,13 @@ $accent: #236b77;
          -o-background-size: $size;
             background-size: $size;
 }
+
+
+
+
+
+
+
 
 body {
     min-height: 100%;
@@ -34,8 +34,15 @@ body {
     font-size: 1em;
     color: #EEE;
 
-    background: #253157 url('../img/bg.jpg') no-repeat center bottom;
-    @include background-size(cover);
+
+background-color: #01008b;
+background: -moz-linear-gradient(top, #01008b 0%, #8600c6 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #01008b 0%, #8600c6 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #01008b 0%, #8600c6 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
+
+    // background: $accent url('../img/bg.jpg') no-repeat center bottom;
+    // @include background-size(cover);
 }
 
 header {
@@ -71,7 +78,6 @@ main {
     display: flex;
     flex-direction: row;
 
-    // remove side borders when container is full-width
     @media (max-width: $screen-xs-max) {
         margin: 20px 10px 0 !important;
         flex-direction: column;
@@ -221,7 +227,7 @@ main {
             height: 10px;
             fill: #FFF;
             margin: 0 8px 0 0;
-            opacity: 0.6;
+            // opacity: 0.6;
         }
     }
 }
@@ -249,7 +255,8 @@ main {
                 margin: 0 7px 0 0;
                 position: relative;
                 top: 1px;
-                opacity: 0.4;
+                fill: #FFF;
+                // opacity: 0.4;
             }
         }
     }
@@ -266,25 +273,6 @@ main {
     }
 }
 
-.robot {
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    height: 100%;
-
-    @media (max-width: $screen-xs-max) {
-        display: none;
-    }
-
-    svg {
-        fill: #fff;
-        text-align: center;
-        width: 100px;
-        height: 100px;
-        margin: auto auto auto auto;
-    }
-}
-
 footer {
     position: relative;
     color: #fff;
@@ -292,8 +280,6 @@ footer {
     height: 120px;
     line-height: 50px;
     z-index: 10;
-
-    @include transition(opacity .25s linear);
 
     p {
         position: relative;
@@ -351,29 +337,5 @@ footer {
                 top: 2px;
             }
         }
-    }
-}
-
-svg {
-    #check {
-        stroke: #fff;
-        stroke-width: 3px;
-        stroke-linecap: butt;
-        stroke-linejoin: miter;
-        fill: none;
-    }
-    #heart {
-        stroke: #fff;
-        stroke-width: 10px;
-        stroke-linecap: round;
-        stroke-linejoin: miter;
-        fill: none;
-    }
-    #brush {
-        fill: #fff;
-    }
-    #shapes {
-        stroke: #fff;
-        stroke-width: 3px;
     }
 }

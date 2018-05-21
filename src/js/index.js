@@ -49,19 +49,19 @@ const renderers = [
     },
 ];
 
-multiToggle('shape', [0, 1, 2], value => defaults.shape = value);
+// multiToggle('shape', [0, 1, 2], value => defaults.shape = value);
 
-multiToggle('color', [0, 1, 2], value => {
-    if (value === 0) {
-        defaults.phase = () => null;
-    }
-    else if (value == 1) {
-        defaults.phase = () => parseInt(Math.random() * 20);
-    }
-    else if (value == 2) {
-        defaults.phase = (x) => x / 180;
-    }
-});
+// multiToggle('color', [0, 1, 2], value => {
+//     if (value === 0) {
+//         defaults.phase = () => null;
+//     }
+//     else if (value == 1) {
+//         defaults.phase = () => parseInt(Math.random() * 20);
+//     }
+//     else if (value == 2) {
+//         defaults.phase = (x) => x / 180;
+//     }
+// });
 
 // keep the canvas at the right size as the window changes
 const resize = () => canvas.width = container.clientWidth;
