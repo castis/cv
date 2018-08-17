@@ -1,8 +1,8 @@
-@import "vendor/bootstrap/bootstrap";
+@import "reset";
 
 @charset "utf-8";
 
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600);
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600");
 
 @-webkit-viewport { width: device-width; }
 @-moz-viewport { width: device-width; }
@@ -10,7 +10,10 @@
 @-o-viewport { width: device-width; }
 @viewport { width: device-width; }
 
-$accent: #01008b;
+
+$small: 400px;
+$medium: 600px;
+$large: 900px;
 
 @mixin background-size($size) {
     -webkit-background-size: $size;
@@ -19,12 +22,9 @@ $accent: #01008b;
             background-size: $size;
 }
 
-
-
-
-
-
-
+$accent: #4da2df;
+$bg-top: #4da2df;
+$bg-bottom: #c05a82;
 
 body {
     min-height: 100%;
@@ -34,83 +34,86 @@ body {
     font-size: 1em;
     color: #EEE;
 
-
-background-color: #01008b;
-background: -moz-linear-gradient(top, #01008b 0%, #8600c6 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(top, #01008b 0%, #8600c6 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(to bottom, #01008b 0%, #8600c6 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-
-
-    // background: $accent url('../img/bg.jpg') no-repeat center bottom;
-    // @include background-size(cover);
+    background-color: $bg-top;
+    background: -moz-linear-gradient(top, $bg-top 0%, $bg-bottom 100%);
+    background: -webkit-linear-gradient(top, $bg-top 0%, $bg-bottom 100%);
+    background: linear-gradient(to bottom, $bg-top 0%, $bg-bottom 100%);
 }
 
 header {
-    margin-top: 30px;
     text-align: center;
+    text-shadow: 2px 2px 5px #444;
+    margin: 15px 0 35px;
+
+    h1, h2 {
+        margin: 0;
+        font-weight: 700;
+    }
 
     h1 {
-        margin: 20px 0 40px;
-        padding: 0;
-        font-size: 2.4em;
-        font-weight: 700;
-        letter-spacing: -1px;
-        text-shadow: 2px 2px 5px #444;
+        font-size: 2.5em;
+        line-height: 2em;
+    }
 
-        span {
-            color: #fcdccf;
-        }
+    h2 {
+        font-size: 1.5em;
+        line-height: 1.4em;
 
-        &::first-line {
-            font-size: 1.5em;
-            letter-spacing: -0.03em;
-            font-weight: 800;
-            line-height: 1.5em;
+        .fancy { display: block; }
+        .name { color: #fcdccf; }
+
+        @media (min-width: $medium) {
+            .fancy { display: inline; }
         }
     }
+}
+
+header, main, footer {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 main {
     color: #004;
     background: rgba(255, 255, 255, 0.95);
-    position: relative;
-    z-index: 10;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 1000px;
 
-    @media (max-width: $screen-xs-max) {
-        margin: 20px 10px 0 !important;
+    @media (max-width: $small) {
+        margin: 20px 0 0 !important;
         flex-direction: column;
-    }
-
-    .column {
-        display: flex;
-        flex-direction: column;
-
-        .box:last-of-type {
-            margin-bottom: 0;
-        }
     }
 
     .box {
-        position: relative;
-        z-index: 15;
         margin-bottom: 20px;
 
-        h2 {
+        h3 {
             color: $accent;
-            font-size: 1.8em;
+            font-size: 1.3em;
             font-weight: 700;
+            margin: 0 0 10px 0;
         }
 
         p {
-            font-size: 1.3em;
+            font-size: 1em;
             line-height: 1.5em;
+            margin: 0;
         }
 
         ul {
             list-style: none;
             padding: 0;
+
+            li {
+                font-size: 0.9rem;
+                font-weight: 500;
+            }
         }
     }
 
@@ -124,6 +127,17 @@ main {
     }
 }
 
+.me {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+@media (min-width: $medium) {
+    .me {
+        flex-direction: row;
+    }
+}
+
 .about {}
 
 .contact {
@@ -133,7 +147,7 @@ main {
         color: $accent;
 
         li {
-            font-size: 1.5em;
+            // font-size: 1em;
             margin-top: 10px;
 
             a {
@@ -144,41 +158,77 @@ main {
     }
 }
 
+@media (min-width: $medium) {
+    .about {
+        width: 68%;
+    }
+    .contact {
+        width: 30%;
+        margin-left: 30px;
+    }
+}
+
 .experience {
     hr {
         border: solid 1px #AAA;
         opacity: 0.3;
         border-width: 1px 0 0;
         width: 80%;
+        margin: 30px auto;
     }
     .job {
-        @include clearfix();
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
 
-        margin-bottom: 20px;
-
-        div {
-            padding: 0;
+        @media (min-width: $medium) {
+            flex-direction: row;
         }
 
-        h3 {
-            font-size: 1.4em;
-            font-weight: bold;
-            padding: 0;
-            margin: 0 0 8px 0;
+        h4 {
+            margin: 0;
+            font-size: 18px;
+            margin-bottom: 4px;
         }
 
-        .col-sm-3 {
-            padding: 0 10px 0 0;
+        .where {
+            width: 100%;
+            min-width: 100px;
+            display: flex;
+            justify-content: space-between;
+
+            @media (min-width: $medium) {
+                width: 30%;
+                display: block;
+            }
+
+            @media (min-width: $large) {
+                width: 25%;
+            }
+
+            h4 {
+            }
+
             p {
-                font-size: 1.3em;
-                opacity: 0.7;
-                margin-bottom: 15px;
+                font-size: 12px;
+                margin-bottom: 10px;
             }
         }
 
-        .col-sm-9 p {
-            font-size: 1.2em;
-            line-height: 1.5em;
+        .what {
+            width: 100%;
+
+            @media (min-width: $medium) {
+                width: 68%;
+            }
+
+            @media (min-width: $large) {
+                width: 73%;
+            }
+
+            p {
+                margin: 5px 0;
+            }
         }
 
         ul {
@@ -195,11 +245,14 @@ main {
                 background: $accent;
                 padding: 4px 6px 5px 5px;
                 margin: 0 2px 3px;
-                line-height: 1em;
                 color: #fff;
             }
         }
     }
+}
+
+.stuff {
+
 }
 
 .handy {
@@ -227,14 +280,11 @@ main {
             height: 10px;
             fill: #FFF;
             margin: 0 8px 0 0;
-            // opacity: 0.6;
         }
     }
 }
 
 .hobbies {
-    float: right;
-
     ul {
         display: flex;
         align-content: flex-start;
@@ -262,13 +312,17 @@ main {
     }
 }
 
-// pull it left when in tiny-mode
-@media (max-width: $screen-sm-max) {
-    .hobbies {
-        float: left !important;
+@media (min-width: $medium) {
+    .experience {
+        width: 68%;
     }
+    .stuff {
+        width: 30%;
+    }
+    .handy {
 
-    .column {
+    }
+    .hobbies {
 
     }
 }
@@ -280,6 +334,9 @@ footer {
     height: 120px;
     line-height: 50px;
     z-index: 10;
+    display: flex;
+    padding: 0 20px;
+    justify-content: space-between;
 
     p {
         position: relative;
@@ -313,29 +370,22 @@ footer {
         z-index: 0;
     }
 
-    .left {
-        float: left;
-    }
+    span {
+        cursor: pointer;
+        // display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 10px;
+        fill: #FFF;
+        padding: 2px 10px;
+        background: rgba(255, 255, 255, 0.1);
+        // height: 25px;
+        border: solid 1px #FFFFFF;
+        border-radius: 2px;
 
-    .right {
-        float: right;
-        font-size: 2.0rem;
-        letter-spacing: 0.5rem;
-
-        .switch {
-            cursor: pointer;
-            display: inline-block;
-            fill: #FFF;
-            width: 30px;
-            height: 30px;
-            margin-top: 12px;
-            opacity: 0.5;
-            text-align: center;
-
-            &:active {
-                position: relative;
-                top: 2px;
-            }
+        &:active {
+            position: relative;
+            top: 2px;
         }
     }
 }

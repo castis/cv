@@ -10,12 +10,11 @@ const uglify = require('gulp-uglify');
 const uncss = require('gulp-uncss');
 const argv = require('yargs').argv;
 
-const build = argv.build === true;
 
 gulp.task('default', () => {
     gulp.start(['js', 'sass', 'html']);
 
-    if (!build) {
+    if (!argv.build) {
         gulp.watch(['src/scss/*', 'public/*.html'], ['sass']);
         gulp.watch(['src/js/*'], ['js']);
         gulp.watch(['src/index.html'], ['html']);
@@ -35,9 +34,11 @@ gulp.task('preview', () => {
 
 gulp.task('js', () => {
     const babelCompiler = babel({
-        presets: ['es2015', 'stage-0'],
+        presets: ['env'],
     }).on('error', (err) => {
-        console.log(err.message);
+        console.log(`babel: ${err.message}`);
+        console.log(`${err.cause.message} in ${err.cause.filename} on line ${err.cause.line}`);
+
         babelCompiler.end();
     });
 
@@ -60,13 +61,12 @@ gulp.task('sass', () => {
         errLogToConsole: false
     }).on('error', sass.logError);
 
-    let vinyl;
-    vinyl = gulp.src(['./src/scss/index.scss'])
+    let vinyl = gulp.src(['./src/scss/index.scss'])
         .pipe(sourcemaps.init())
         .pipe(sassCompiler)
         .pipe(cleancss());
 
-    if (build) {
+    if (argv.build) {
         vinyl = vinyl.pipe(uncss({
             html: ['./public/index.html'],
         }));
@@ -78,9 +78,13 @@ gulp.task('sass', () => {
 });
 
 gulp.task('html', () => {
-    gulp.src('src/index.html')
-        .pipe(htmlmin({
+    let vinyl = gulp.src('src/index.html');
+
+    if (argv.build) {
+        vinyl = vinyl.pipe(htmlmin({
             collapseWhitespace: true
-        }))
-        .pipe(gulp.dest('public'));
+        }));
+    }
+
+    vinyl.pipe(gulp.dest('public'));
 });

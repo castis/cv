@@ -31,9 +31,9 @@ const renderers = [
         const len = state.radius * 3;
         const y = state.y - len; // make sure it forms above the top border
 
-        context.moveTo(state.x, y); // left
-        context.lineTo(state.x + (len / 2), y + (len * 0.9)); // bottom
-        context.lineTo(state.x + len, y); // right
+        context.moveTo(state.x, y); // top left
+        context.lineTo(state.x + (len / 2), y + (len * 0.9)); // bottom center
+        context.lineTo(state.x + len, y); // top right
     },
 
     // bar
@@ -49,19 +49,19 @@ const renderers = [
     },
 ];
 
-// multiToggle('shape', [0, 1, 2], value => defaults.shape = value);
+multiToggle('shape', [0, 1, 2], value => defaults.shape = value);
 
-// multiToggle('color', [0, 1, 2], value => {
-//     if (value === 0) {
-//         defaults.phase = () => null;
-//     }
-//     else if (value == 1) {
-//         defaults.phase = () => parseInt(Math.random() * 20);
-//     }
-//     else if (value == 2) {
-//         defaults.phase = (x) => x / 180;
-//     }
-// });
+multiToggle('color', [0, 1, 2], value => {
+    if (value === 0) {
+        defaults.phase = () => null;
+    }
+    else if (value == 1) {
+        defaults.phase = () => parseInt(Math.random() * 20);
+    }
+    else if (value == 2) {
+        defaults.phase = (x) => x / 180;
+    }
+});
 
 // keep the canvas at the right size as the window changes
 const resize = () => canvas.width = container.clientWidth;
