@@ -65,8 +65,8 @@ multiToggle('color', [0, 1, 2], value => {
     }
 });
 
-let particleCount = 30;
-let delta = 30;
+let particleCount = 50;
+let delta = 20;
 document.getElementById('plus').addEventListener('click', (e) => {
     particleCount = Math.min(1000, particleCount + delta);
 });
