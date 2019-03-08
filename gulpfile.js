@@ -37,14 +37,13 @@ gulp.task('js', () => {
         presets: ['env'],
     }).on('error', (err) => {
         console.log(`babel: ${err.message}`);
-        console.log(`${err.cause.message} in ${err.cause.filename} on line ${err.cause.line}`);
 
         babelCompiler.end();
     });
 
     gulp.src('src/js/*.js')
-        .pipe(sourcemaps.init())
         .pipe(concat('index.js'))
+        .pipe(sourcemaps.init())
         .pipe(babelCompiler)
         .pipe(uglify({
             compress: true,

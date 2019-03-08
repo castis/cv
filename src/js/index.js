@@ -12,14 +12,28 @@ function multiToggle(id, positions, callback) {
 const container = document.querySelector('footer');
 const canvas = container.querySelector('canvas');
 const context = canvas.getContext('2d');
-const particles = [];
+let particles = [];
 
 const defaults = {
     shape: 0,
     phase: () => {},
+    // phase: (x) => x / 180,
+    // phase: () => parseInt(Math.random() * 20),
 };
 
 const renderers = [
+    // bar
+    (state) => {
+        // width is tied to alpha so it shrinks as time goes on
+        const width = (state.radius * 2) + (state.alpha * 10);
+        const height = 120;
+
+        context.moveTo(state.x, state.y); // bottom left
+        context.lineTo(state.x + (width), state.y); // bottom right
+        context.lineTo(state.x + (width), state.y - height); // top right
+        context.lineTo(state.x, state.y - height); // top left
+    },
+
     // circle
     (state) => {
         // y - radius to spawn above the top border
@@ -35,18 +49,6 @@ const renderers = [
         context.lineTo(state.x + (len / 2), y + (len * 0.9)); // bottom center
         context.lineTo(state.x + len, y); // top right
     },
-
-    // bar
-    (state) => {
-        // width is tied to alpha so it shrinks as time goes on
-        const width = (state.radius * 2) + (state.alpha * 10);
-        const height = 120;
-
-        context.moveTo(state.x, state.y); // bottom left
-        context.lineTo(state.x + width, state.y); // bottom right
-        context.lineTo(state.x + width, state.y - height); // top right
-        context.lineTo(state.x, state.y - height); // top left
-    },
 ];
 
 multiToggle('shape', [0, 1, 2], value => defaults.shape = value);
@@ -61,6 +63,15 @@ multiToggle('color', [0, 1, 2], value => {
     else if (value == 2) {
         defaults.phase = (x) => x / 180;
     }
+});
+
+let particleCount = 30;
+let delta = 30;
+document.getElementById('plus').addEventListener('click', (e) => {
+    particleCount = Math.min(1000, particleCount + delta);
+});
+document.getElementById('minus').addEventListener('click', (e) => {
+    particleCount = Math.max(10, particleCount - delta);
 });
 
 // keep the canvas at the right size as the window changes
@@ -116,40 +127,23 @@ function draw(state) {
     context.fill();
 }
 
-function animate() {
+function run() {
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     for (let i = particles.length; i--;) {
         draw(particles[i] = update(particles[i]));
     }
 
-    requestAnimationFrame(animate);
+    if (particles.length > particleCount) {
+        let toRemove = Math.min(2, particles.length - particleCount)
+        particles = particles.slice(toRemove)
+    } else if (particles.length < particleCount) {
+        for (let x = 0; x < Math.min(2, particleCount - particles.length); x++) {
+            particles.push(update());
+        }
+    }
+
+    requestAnimationFrame(run)
 }
 
-// if we add all the particles at once then they come in waves
-const maxBubbles = canvas.width / 9;
-const addBubbles = setInterval(() => {
-    if (particles.length > maxBubbles) {
-        return clearInterval(addBubbles);
-    }
-
-    for (let x = 0; x < 10; x++) {
-        particles.push(update());
-    }
-}, 100);
-
-animate();
-
-console.log(`%c Also, my favorite Disney movie is
-                    ..    d$P              $$      '$b
-                    z$"   $$F               4$$      $$L
-                    $$   4$$                 $$.     4$$    ,z$P
-                    $$   $$'                 $$F      $$   $$$P
-                   $$$   $$                  $$f      $$   ""'
-                  $'$$; 4$F      .,_         $$'      $$
-                .$' ?$L 4$'   .d$" '?    zee $$   ,ec $F  d$F z$$   ,ce,.
-              .d$ee. $$ 4$'  d$"   z$  $$"  .$f.d$"  4$  4$$ 4$$P z$P?$$$
-             d$" "?$$d$,'$  $$F   z$f,$$    $$.$$    $P  $$% $$$4$"   4$$
-.$"%.     ,p$"        $$ $ J$$  z$$$ $$"  .$$ $$"  .$$C 4$P  $$$"     $$f
-'$.     ,d$b****q,     $.$ $$$$$P $$.$$b.$P4$ $$L.$P4$F $P  4$P     .$$"
- '?$$g$P"        "     'b' '??"   "?"^?F"   $$'?PF"  $$ "   P'     eF`, "font-family:monospace");
+run();
