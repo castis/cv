@@ -26,7 +26,7 @@ gulp.task('default', () => {
 gulp.task('preview', () => {
     connect.server({
         root: ['public'],
-        port: 8000,
+        port: 8080,
         livereload: true,
         debug: true,
     });

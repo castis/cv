@@ -67,12 +67,33 @@ multiToggle('color', [0, 1, 2], value => {
 
 let particleCount = 50;
 let delta = 20;
-document.getElementById('plus').addEventListener('click', (e) => {
+
+// hold to add particles
+const plus = document.getElementById('plus');
+let plusInterval;
+const addParticles = (e) => {
     particleCount = Math.min(1000, particleCount + delta);
+};
+plus.addEventListener('mousedown', (e) => {
+    plusInterval = setInterval(addParticles, 100);
 });
-document.getElementById('minus').addEventListener('click', (e) => {
+['mouseup', 'mouseout'].forEach(l => {
+    plus.addEventListener(l, (e) => clearInterval(plusInterval));
+});
+
+// hold to remove particles
+const minus = document.getElementById('minus');
+let minusInterval;
+const removeParticles = (e) => {
     particleCount = Math.max(10, particleCount - delta);
+};
+
+minus.addEventListener('mousedown', (e) => {
+    minusInterval = setInterval(removeParticles, 100);
 });
+['mouseup', 'mouseout'].forEach(l => {
+    minus.addEventListener(l, (e) => clearInterval(minusInterval));
+})
 
 // keep the canvas at the right size as the window changes
 const resize = () => canvas.width = container.clientWidth;
