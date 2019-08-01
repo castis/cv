@@ -65,35 +65,38 @@ multiToggle('color', [0, 1, 2], value => {
     }
 });
 
+function holdToggle(element, func) {
+    let interval;
+    element.addEventListener('mousedown', (e) => {
+        interval = setInterval(func, 100, element);
+    });
+    ['mouseup', 'mouseout'].forEach(eventName => {
+        element.addEventListener(eventName, (e) => clearInterval(interval));
+    });
+}
+
 let particleCount = 50;
-let delta = 20;
+const delta = 20,
+      minParticles = 10,
+      maxParticles = 1000;
 
-// hold to add particles
-const plus = document.getElementById('plus');
-let plusInterval;
-const addParticles = (e) => {
-    particleCount = Math.min(1000, particleCount + delta);
-};
-plus.addEventListener('mousedown', (e) => {
-    plusInterval = setInterval(addParticles, 100);
-});
-['mouseup', 'mouseout'].forEach(l => {
-    plus.addEventListener(l, (e) => clearInterval(plusInterval));
+holdToggle(document.getElementById('plus'), (element) => {
+    if (particleCount < maxParticles) {
+        element.classList = ['vibratey'];
+        particleCount = Math.min(maxParticles, particleCount + delta);
+    } else {
+        element.classList = [];
+    }
 });
 
-// hold to remove particles
-const minus = document.getElementById('minus');
-let minusInterval;
-const removeParticles = (e) => {
-    particleCount = Math.max(10, particleCount - delta);
-};
-
-minus.addEventListener('mousedown', (e) => {
-    minusInterval = setInterval(removeParticles, 100);
+holdToggle(document.getElementById('minus'), (element) => {
+    if (particleCount > minParticles) {
+        element.classList = ['vibratey'];
+        particleCount = Math.max(minParticles, particleCount - delta);
+    } else {
+        element.classList = [];
+    }
 });
-['mouseup', 'mouseout'].forEach(l => {
-    minus.addEventListener(l, (e) => clearInterval(minusInterval));
-})
 
 // keep the canvas at the right size as the window changes
 const resize = () => canvas.width = container.clientWidth;
