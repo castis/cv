@@ -27,11 +27,12 @@ const renderers = [
         // width is tied to alpha so it shrinks as time goes on
         const width = (state.radius * 2) + (state.alpha * 10);
         const height = 120;
+        const adjusted = state.x - (state.alpha * 2);
 
-        context.moveTo(state.x, state.y); // bottom left
-        context.lineTo(state.x + (width), state.y); // bottom right
-        context.lineTo(state.x + (width), state.y - height); // top right
-        context.lineTo(state.x, state.y - height); // top left
+        context.moveTo(adjusted, state.y); // bottom left
+        context.lineTo(adjusted + (width), state.y); // bottom right
+        context.lineTo(adjusted + (width), state.y - height); // top right
+        context.lineTo(adjusted, state.y - height); // top left
     },
 
     // circle
