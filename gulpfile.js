@@ -7,7 +7,6 @@ const htmlmin = require('gulp-htmlmin');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
-const uncss = require('gulp-uncss');
 const argv = require('yargs').argv;
 
 
@@ -60,18 +59,11 @@ gulp.task('sass', () => {
         errLogToConsole: false
     }).on('error', sass.logError);
 
-    let vinyl = gulp.src(['./src/scss/index.scss'])
+    gulp.src(['./src/scss/index.scss'])
         .pipe(sourcemaps.init())
         .pipe(sassCompiler)
-        .pipe(cleancss());
-
-    if (argv.build) {
-        vinyl = vinyl.pipe(uncss({
-            html: ['./public/index.html'],
-        }));
-    }
-
-    vinyl.pipe(sourcemaps.write('.'))
+        .pipe(cleancss())
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('public/assets'))
         .pipe(connect.reload());
 });
