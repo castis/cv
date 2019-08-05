@@ -48,9 +48,10 @@ const renderers = [
 // pass that current value to `callback`
 function multiToggle(id, positions, callback) {
     let index = 0;
-    const next = () => index >= positions.length - 1 ? 0 : index + 1;
+
     document.getElementById(id).addEventListener('click', () => {
-        callback(positions[next()]);
+        index = index >= positions.length - 1 ? 0 : index + 1;
+        callback(positions[index]);
     });
 }
 
@@ -173,7 +174,7 @@ function run() {
         }
     }
 
-    requestAnimationFrame(run)
+    requestAnimationFrame(run);
 }
 
 run();
