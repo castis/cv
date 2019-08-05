@@ -1,14 +1,5 @@
 "use strict";
 
-function multiToggle(id, positions, callback) {
-    let index = 0;
-
-    document.getElementById(id).addEventListener('click', () => {
-        index = index >= positions.length - 1 ? 0 : index + 1;
-        callback(positions[index]);
-    });
-}
-
 const container = document.querySelector('footer');
 const canvas = container.querySelector('canvas');
 const context = canvas.getContext('2d');
@@ -52,6 +43,17 @@ const renderers = [
     },
 ];
 
+// attach an event listener to `#id`,
+// when clicked, iterate through `positions`
+// pass that current value to `callback`
+function multiToggle(id, positions, callback) {
+    let index = 0;
+    const next = () => index >= positions.length - 1 ? 0 : index + 1;
+    document.getElementById(id).addEventListener('click', () => {
+        callback(positions[next()]);
+    });
+}
+
 multiToggle('shape', [0, 1, 2], value => defaults.shape = value);
 
 multiToggle('color', [0, 1, 2], value => {
@@ -66,8 +68,12 @@ multiToggle('color', [0, 1, 2], value => {
     }
 });
 
-function holdToggle(element, func) {
+// attach an event listener to `#id`
+// run the function `func` 10 times a second
+// while mouse is clicked down
+function holdToggle(id, func) {
     let interval;
+    const element = document.getElementById(id);
     element.addEventListener('mousedown', (e) => {
         interval = setInterval(func, 100, element);
     });
@@ -81,7 +87,7 @@ const delta = 20,
       minParticles = 10,
       maxParticles = 1000;
 
-holdToggle(document.getElementById('plus'), (element) => {
+holdToggle('plus', (element) => {
     if (particleCount < maxParticles) {
         element.classList = ['vibratey'];
         particleCount = Math.min(maxParticles, particleCount + delta);
@@ -90,7 +96,7 @@ holdToggle(document.getElementById('plus'), (element) => {
     }
 });
 
-holdToggle(document.getElementById('minus'), (element) => {
+holdToggle('minus', (element) => {
     if (particleCount > minParticles) {
         element.classList = ['vibratey'];
         particleCount = Math.max(minParticles, particleCount - delta);
@@ -160,10 +166,9 @@ function run() {
     }
 
     if (particles.length > particleCount) {
-        let toRemove = Math.min(2, particles.length - particleCount)
-        particles = particles.slice(toRemove)
+        particles = particles.slice(Math.min(2, particles.length - particleCount))
     } else if (particles.length < particleCount) {
-        for (let x = 0; x < Math.min(2, particleCount - particles.length); x++) {
+        for (let x = 0; x < particleCount - particles.length; x++) {
             particles.push(update());
         }
     }
