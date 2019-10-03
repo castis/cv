@@ -59,7 +59,10 @@ gulp.task('sass', () => {
         errLogToConsole: false
     }).on('error', sass.logError);
 
-    gulp.src(['./src/scss/index.scss'])
+    gulp.src([
+        './src/scss/index.scss',
+        './src/scss/print.scss'
+    ])
         .pipe(sourcemaps.init())
         .pipe(sassCompiler)
         .pipe(cleancss())

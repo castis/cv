@@ -7,15 +7,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Daniel Sibitzky</title>
     <link href="/assets/index.css" rel="stylesheet">
+    <link href="/assets/print.css" rel="stylesheet" media="print">
 </head>
 
 <body>
-    <header>
+    <header class="desktop">
         <h1>Hello</h1>
-        <h2><span class="fancy">My name is <span class="name">Daniel</span></span> and this is my CV</h2>
+        <h2><span class="fancy">My name is <span class="name">Daniel</span></span> and I've been programming since 2002</h2>
     </header>
     <main>
+        <header class="print">
+            <h1>Daniel Sibitzky</h1>
+            <h2>Programming since 2002</h2>
+        </header>
         <div class="me">
+            <div class="box topstuff print">
+                <h3>Things I can help with</h3>
+                <ul>
+                    <li>Python</li>
+                    <li>PHP</li>
+                    <li>JavaScript (+ React, Node)</li>
+                    <li>Infrastructure</li>
+                    <li>MySQL/PostgreSQL</li>
+                    <li>HTML/CSS (+ Less, SCSS)</li>
+                </ul>
+            </div>
+
             <div class="box about">
                 <h3>About me</h3>
                 <p>I've always loved figuring out how things work. As a kid, I took apart everything I could get my hands on (most of which I'm sure my parents wish I wouldn't have).</p>
@@ -25,9 +42,12 @@
             <div class="box contact">
                 <h3>Say hi</h3>
                 <ul>
-                    <li><a href="mailto:daniel@sibitzky.com">daniel@sibitzky.com</a></li>
-                    <li><a href="https://github.com/castis">github</a></li>
-                    <li><a href="https://stackoverflow.com/cv/dsibitzky">stackoverflow</a></li>
+                    <li class="desktop"><a href="mailto:daniel@sibitzky.com">daniel@sibitzky.com</a></li>
+                    <li class="print">daniel@sibitzky.com</li>
+                    <li class="desktop"><a href="https://github.com/castis">github</a></li>
+                    <li class="print">https://github.com/castis</li>
+                    <li class="desktop"><a href="https://stackoverflow.com/cv/dsibitzky">stackoverflow</a></li>
+                    <li class="print">https://stackoverflow.com/cv/dsibitzky</li>
                 </ul>
             </div>
         </div>
@@ -174,6 +194,23 @@
                     </ul>
                 </div>
             </div>
+            <hr>
+            <div class="job">
+                <div class="where">
+                    <h4>Personal Projects</h4>
+                    <p>2002 - 2008</p>
+                </div>
+                <div class="what">
+                    <h4>Full Stack</h4>
+                    <p>Built a handful of web pages for friends, family, and people I'd met over the internet. Worked up a custom PHP framework around several messageboards I'd built.</p>
+                    <ul>
+                        <li>HTML</li>
+                        <li>CSS</li>
+                        <li>PHP</li>
+                        <li>JavaScript</li>
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="stuff">
             <div class="box handy">
@@ -181,10 +218,10 @@
                 <ul>
                     <li class="python"><svg><use xlink:href="#check"/></svg>Python</li>
                     <li class="php"><svg><use xlink:href="#check"/></svg>PHP</li>
-                    <li class="js"><svg><use xlink:href="#check"/></svg>JavaScript</li>
+                    <li class="js"><svg><use xlink:href="#check"/></svg>JavaScript (+ React, Node)</li>
                     <li class="inf"><svg><use xlink:href="#check"/></svg>Infrastructure</li>
                     <li class="db"><svg><use xlink:href="#check"/></svg>MySQL/PostgreSQL</li>
-                    <li class="html"><svg><use xlink:href="#check"/></svg>HTML/CSS</li>
+                    <li class="html"><svg><use xlink:href="#check"/></svg>HTML/CSS (+ Less, SCSS)</li>
                 </ul>
             </div>
 
