@@ -36,7 +36,6 @@ gulp.task('js', () => {
         presets: ['env'],
     }).on('error', (err) => {
         console.log(`babel: ${err.message}`);
-
         babelCompiler.end();
     });
 

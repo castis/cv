@@ -32,6 +32,22 @@ on:
 name: Deploy to Amazon ECS
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js 10.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.x
+
+    - name: npm install, build, and test
+      run: |
+        npm install
+        npx gulp --build
+      env:
+        PRODUCTION: true
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
