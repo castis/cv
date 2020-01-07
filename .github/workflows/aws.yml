@@ -32,11 +32,13 @@ on:
 name: Deploy to Amazon ECS
 
 jobs:
-  build:
+    name: Deploy
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - name: Checkout
+      uses: actions/checkout@v1
+
     - name: Use Node.js 10.x
       uses: actions/setup-node@v1
       with:
@@ -48,13 +50,6 @@ jobs:
         npx gulp --build
       env:
         PRODUCTION: true
-  deploy:
-    name: Deploy
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v1
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
