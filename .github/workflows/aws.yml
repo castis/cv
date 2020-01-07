@@ -3,39 +3,38 @@ on:
     branches:
       - master
 
-name: deploy to ecs
+name: Deploy to ECS
 
 jobs:
   deploy:
-    name: deploy
+    name: Deploy
     runs-on: ubuntu-latest
 
     steps:
-    - name: checkout
+    - name: Checkout
       uses: actions/checkout@v1
 
-    - name: Setup Node
-      uses: actions/setup-node@v1
+    - uses: actions/setup-node@v1
       with:
         node-version: 10.x
 
-    - name: gulp build
+    - name: Build
       run: |
         npm install
         npx gulp --build
 
-    - name: configure aws
+    - name: Configure AWS
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
 
-    - name: login to amazon ecr
+    - name: Login to ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
-    - name: docker build
+    - name: Build Docker image
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -49,7 +48,7 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
-    - name: swap task definitions
+    - name: Swap Task Definitions
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
@@ -57,7 +56,7 @@ jobs:
         container-name: nginx
         image: ${{ steps.build-image.outputs.image }}
 
-    - name: deploy ecs task definition
+    - name: Deploy ECS Task Definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
