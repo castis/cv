@@ -57,7 +57,7 @@
     }
   ],
   "placementConstraints": [],
-  "memory": "512"
+  "memory": "512",
   "family": "first-run-task-definition",
   "pidMode": null,
   "requiresCompatibilities": [
