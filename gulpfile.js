@@ -76,6 +76,7 @@ gulp.task('html', () => {
     if (argv.build) {
         vinyl = vinyl.pipe(htmlmin({
             collapseWhitespace: true,
+            removeComments: true,
         }))
     }
 
