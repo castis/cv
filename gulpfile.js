@@ -60,7 +60,7 @@ gulp.task('sass', () => {
 
     gulp.src([
         './src/scss/index.scss',
-        './src/scss/print.scss'
+        //'./src/scss/print.scss',
     ])
         .pipe(sourcemaps.init())
         .pipe(sassCompiler)

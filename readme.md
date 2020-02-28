@@ -1,0 +1,2 @@
+    nvm use
+    npx gulp
