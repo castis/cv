@@ -1,110 +1,32 @@
 "use strict";
 
-const container = document.querySelector('footer');
+const container = document.querySelector('.me');
 const canvas = container.querySelector('canvas');
 const context = canvas.getContext('2d');
 let particles = [];
 
 const defaults = {
     shape: 0,
-    phase: () => {},
-    // phase: (x) => x / 180,
-    // phase: () => parseInt(Math.random() * 20),
+    phase: () => {}, // white
+    // phase: (x) => x / 180, // rainbow
+    // phase: () => parseInt(Math.random() * 20), // random colors
+    // phase: () => parseInt(350),
 };
 
-const renderers = [
-    // bar
-    (state) => {
-        // width is tied to alpha so it shrinks as time goes on
-        const width = (state.radius * 2) + (state.alpha * 10);
-        const height = 120;
-        const adjusted = state.x - (state.alpha * 2);
+const over = (e) => {
+    defaults['phase'] = () => Math.random() * 20
+};
 
-        context.moveTo(adjusted, state.y); // bottom left
-        context.lineTo(adjusted + (width), state.y); // bottom right
-        context.lineTo(adjusted + (width), state.y - height); // top right
-        context.lineTo(adjusted, state.y - height); // top left
-    },
+const out = (e) => {
+    defaults['phase'] = () => {}
+};
 
-    // circle
-    (state) => {
-        // y - radius to spawn above the top border
-        context.arc(state.x, state.y - state.radius, state.radius, 0, 6.2832);
-    },
-
-    // triangle
-    (state) => {
-        const len = state.radius * 3;
-        const y = state.y - len; // make sure it forms above the top border
-
-        context.moveTo(state.x, y); // top left
-        context.lineTo(state.x + (len / 2), y + (len * 0.9)); // bottom center
-        context.lineTo(state.x + len, y); // top right
-    },
-];
-
-// attach an event listener to `#id`,
-// when clicked, iterate through `positions`
-// pass that current value to `callback`
-function multiToggle(id, positions, callback) {
-    let index = 0;
-
-    document.getElementById(id).addEventListener('click', () => {
-        index = index >= positions.length - 1 ? 0 : index + 1;
-        callback(positions[index]);
-    });
+const allTheShit = document.querySelectorAll('footer, canvas')
+var items = Array.prototype.slice.call(allTheShit)
+for (var i in items) {
+    items[i].addEventListener('mouseover', over);
+    items[i].addEventListener('mouseout', out);
 }
-
-multiToggle('shape', [0, 1, 2], value => defaults.shape = value);
-
-multiToggle('color', [0, 1, 2], value => {
-    if (value === 0) {
-        defaults.phase = () => null;
-    }
-    else if (value == 1) {
-        defaults.phase = () => parseInt(Math.random() * 20);
-    }
-    else if (value == 2) {
-        defaults.phase = (x) => x / 180;
-    }
-});
-
-// attach an event listener to `#id`
-// run the function `func` 10 times a second
-// while mouse is clicked down
-function holdToggle(id, func) {
-    let interval;
-    const element = document.getElementById(id);
-    element.addEventListener('mousedown', (e) => {
-        interval = setInterval(func, 100, element);
-    });
-    ['mouseup', 'mouseout'].forEach(eventName => {
-        element.addEventListener(eventName, (e) => clearInterval(interval));
-    });
-}
-
-let particleCount = 50;
-const delta = 20,
-      minParticles = 10,
-      maxParticles = 1000;
-
-holdToggle('plus', (element) => {
-    if (particleCount < maxParticles) {
-        element.classList = ['vibratey'];
-        particleCount = Math.min(maxParticles, particleCount + delta);
-    } else {
-        element.classList = [];
-    }
-});
-
-holdToggle('minus', (element) => {
-    if (particleCount > minParticles) {
-        element.classList = ['vibratey'];
-        particleCount = Math.max(minParticles, particleCount - delta);
-    } else {
-        element.classList = [];
-    }
-});
 
 // keep the canvas at the right size as the window changes
 const resize = () => canvas.width = container.clientWidth;
@@ -128,10 +50,11 @@ function update(state) {
 
         return {
             x: x,
-            y: 0,
-            alpha: 0.6 + Math.random() * 0.3,
+            y: canvas.height + 120,
+            alpha: 0.8 + Math.random() * 0.3,
             radius: radius,
-            velocity: Math.floor(Math.random() * 1.5) + 1,
+            // velocity: Math.random() + 0.3,
+            velocity: Math.random(),
             color: '255,255,255',
             phase: defaults.phase(x),
             shape: defaults.shape,
@@ -140,7 +63,7 @@ function update(state) {
 
     return {
         x: state.x,
-        y: state.y + state.velocity,
+        y: state.y - state.velocity,
         alpha: state.alpha - 0.025,
         radius: state.radius,
         velocity: state.velocity + 0.1,
@@ -153,11 +76,21 @@ function update(state) {
 function draw(state) {
     context.beginPath();
 
-    renderers[state.shape](state);
+    // width is tied to alpha so it shrinks as time goes on
+    const width = (state.radius * 2) + (state.alpha * 10);
+    const height = 120;
+    const adjusted = state.x - (state.alpha * 2);
+
+    context.moveTo(adjusted, state.y); // bottom left
+    context.lineTo(adjusted + (width), state.y); // bottom right
+    context.lineTo(adjusted + (width), state.y - height); // top right
+    context.lineTo(adjusted, state.y - height); // top left
 
     context.fillStyle = 'rgba('+ state.color +','+ state.alpha +')';
     context.fill();
 }
+
+let particleCount = 100;
 
 function run() {
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -166,10 +99,10 @@ function run() {
         draw(particles[i] = update(particles[i]));
     }
 
-    if (particles.length > particleCount) {
-        particles = particles.slice(Math.min(2, particles.length - particleCount))
-    } else if (particles.length < particleCount) {
-        for (let x = 0; x < particleCount - particles.length; x++) {
+    // slowly add new particles or else
+    // they start in waves and it looks like shit
+    if (particles.length < particleCount) {
+        for (let x = 0; x < 2; x++) {
             particles.push(update());
         }
     }
