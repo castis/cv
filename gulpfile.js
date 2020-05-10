@@ -5,9 +5,9 @@ const connect = require('gulp-connect')
 const gulp = require('gulp')
 const htmlmin = require('gulp-htmlmin')
 const sass = require('gulp-sass')
-const sourcemaps = require('gulp-sourcemaps')
 const uglify = require('gulp-uglify')
 const argv = require('yargs').argv
+const inline = require('gulp-inline');
 
 
 gulp.task('default', () => {
@@ -33,7 +33,9 @@ gulp.task('preview', () => {
 
 gulp.task('js', () => {
     const babelCompiler = babel({
-        presets: ['env'],
+        presets: ['env', {
+            sourceMaps: true,
+        }],
     }).on('error', (err) => {
         console.log(`babel: ${err.message}`)
         babelCompiler.end()
@@ -41,13 +43,11 @@ gulp.task('js', () => {
 
     gulp.src('src/js/*.js')
         .pipe(concat('index.js'))
-        .pipe(sourcemaps.init())
         .pipe(babelCompiler)
         .pipe(uglify({
             compress: true,
             mangle: true,
         }))
-        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('public/assets'))
         .pipe(connect.reload())
 })
@@ -62,25 +62,23 @@ gulp.task('sass', () => {
         './src/scss/index.scss',
         //'./src/scss/print.scss',
     ])
-        .pipe(sourcemaps.init())
         .pipe(sassCompiler)
         .pipe(cleancss())
-        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('public/assets'))
         .pipe(connect.reload())
 })
 
 gulp.task('html', () => {
-    let vinyl = gulp.src('src/index.html')
-
-    if (argv.build) {
-        vinyl = vinyl.pipe(htmlmin({
+    gulp.src('src/index.html')
+        .pipe(inline({
+            base: 'public/',
+            disabledTypes: ['img'], // Only inline css files
+            ignore: ['./css/do-not-inline-me.css']
+        })).pipe(htmlmin({
             collapseWhitespace: true,
             removeComments: true,
         }))
-    }
-
-    vinyl.pipe(gulp.dest('public'))
+        .pipe(gulp.dest('public'))
 })
 
 gulp.task('img', () => {
