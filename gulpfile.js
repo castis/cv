@@ -72,9 +72,9 @@ gulp.task('html', () => {
     gulp.src('src/index.html')
         .pipe(inline({
             base: 'public/',
-            disabledTypes: ['img'], // Only inline css files
-            ignore: ['./css/do-not-inline-me.css']
-        })).pipe(htmlmin({
+            disabledTypes: ['img'],
+        }))
+        .pipe(htmlmin({
             collapseWhitespace: true,
             removeComments: true,
         }))
