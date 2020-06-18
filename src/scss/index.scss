@@ -59,16 +59,18 @@ body {
         max-width: 200px;
         margin: 0 auto 15px;
 
-        img {
+        svg {
             width: 100%;
             border-radius: 100px;
+            border: solid 2px rgba(255, 255, 255, 0.2);
         }
     }
 
     .name {
         font-size: 20px;
         margin-bottom: 15px;
-        font-weight: 700;
+        font-weight: 600;
+        letter-spacing: 0.05rem;
     }
 
     .about {
