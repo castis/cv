@@ -70,10 +70,10 @@ gulp.task('sass', () => {
 
 gulp.task('html', () => {
     gulp.src('src/index.html')
-        .pipe(inline({
-            base: 'public/',
-            disabledTypes: ['img'],
-        }))
+        // .pipe(inline({
+        //     base: 'public/',
+        //     disabledTypes: ['img'],
+        // }))
         .pipe(htmlmin({
             collapseWhitespace: true,
             removeComments: true,
