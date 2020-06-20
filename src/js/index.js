@@ -1,5 +1,27 @@
 "use strict"
 
+function rangeRand(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+const group = document.querySelector('.photo svg')
+const pieces = group.querySelectorAll('g circle, g path')
+
+let rotator
+function rotatePieces() {
+    const piece = pieces[Math.floor(Math.random() * pieces.length)]
+    piece.classList.add('hide')
+    setTimeout(() => {
+        piece.classList.remove('hide')
+    }, rangeRand(100, 8000))
+    const timeout = rangeRand(100, 8000)
+    rotator = setTimeout(rotatePieces, timeout)
+}
+function stopRot() {
+    clearTimeout(rotator)
+}
+rotatePieces()
+
 const container = document.querySelector('.me')
 const canvas = container.querySelector('canvas')
 const context = canvas.getContext('2d')
@@ -57,7 +79,7 @@ function update(state) {
         y: state.y - state.velocity,
         alpha: state.alpha - 0.025,
         radius: state.radius,
-        velocity: state.velocity + 0.1,
+        velocity: state.velocity + 0.03,
         color: color(state),
         phase: state.phase,
         shape: state.shape,
@@ -81,16 +103,14 @@ function draw(state) {
     context.fill()
 }
 
-let particleCount = 100
+let particleCount = 50
 
 // slowly add new particles otherwise
 // they appear in waves and it looks like shit
 function addParticles() {
     if (particles.length < particleCount) {
-        for (let x = 0; x < 2; x++) {
-            particles.push(update())
-        }
-        requestAnimationFrame(addParticles)
+        particles.push(update())
+        setTimeout(addParticles, 10)
     }
 }
 addParticles()
