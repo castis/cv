@@ -14,8 +14,7 @@ function rotatePieces() {
     setTimeout(() => {
         piece.classList.remove('hide')
     }, rangeRand(1000, 5000))
-    const timeout = rangeRand(100, 2000)
-    rotator = setTimeout(rotatePieces, timeout)
+    rotator = setTimeout(rotatePieces, rangeRand(200, 1000))
 }
 rotatePieces()
 
