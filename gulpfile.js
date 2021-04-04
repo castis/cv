@@ -4,6 +4,7 @@ const concat = require('gulp-concat')
 const connect = require('gulp-connect')
 const gulp = require('gulp')
 const sass = require('gulp-sass')
+const cssbeautify = require('gulp-cssbeautify')
 
 
 gulp.task('default', () => {
@@ -29,12 +30,12 @@ gulp.task('preview', () => {
 
 gulp.task('js', () => {
   // const babelCompiler = babel({
-    // presets: ['env', {
-      // sourceMaps: true,
-    // }],
+  // presets: ['env', {
+  // sourceMaps: true,
+  // }],
   // }).on('error', (err) => {
-    // console.log(`babel: ${err.message}`)
-    // babelCompiler.end()
+  // console.log(`babel: ${err.message}`)
+  // babelCompiler.end()
   // })
 
   gulp.src('src/js/*.js')
@@ -58,13 +59,13 @@ gulp.task('sass', () => {
   ])
     .pipe(sassCompiler)
     .pipe(cleancss())
+    .pipe(cssbeautify({
+      indent: '  ',
+      openbrace: 'separate-line',
+      autosemicolon: true,
+    }))
     .pipe(gulp.dest('public/assets'))
     .pipe(connect.reload())
-})
-
-gulp.task('html', () => {
-  gulp.src('src/index.html')
-    .pipe(gulp.dest('public'))
 })
 
 gulp.task('img', () => {
