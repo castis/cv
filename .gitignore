@@ -1,5 +1,5 @@
-node_modules*
 *.map
 .DS_Store
-public/assets/*
-public/index.html
+.parcel-cache
+dist/*
+node_modules

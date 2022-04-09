@@ -1,2 +1,1 @@
-    nvm use
-    npx gulp
+`make dev`, `make build`
