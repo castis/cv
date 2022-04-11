@@ -1,1 +1,3 @@
-`make dev`, `make build`
+- `make dev`
+- `make build`
+- `make deploy`

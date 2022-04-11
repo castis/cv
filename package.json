@@ -4,6 +4,6 @@
   },
   "scripts": {
     "prebuild": "rm -f ./dist/index*",
-    "build": "parcel build --no-optimize --no-source-maps src/index.html"
+    "build": "parcel build --no-source-maps --dist-dir=./dist/ src/index.html"
   }
 }

@@ -5,4 +5,4 @@ dev:
 	docker-compose run --rm --service-ports web parcel serve src/index.html
 
 deploy:
-	rsync -av ./dist/ storm:/opt/cv
+	rsync --delete -rv ./dist/ storm:/opt/cv

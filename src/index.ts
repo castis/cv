@@ -1,5 +1,3 @@
-"use strict";
-
 const rangeRand = (min: number, max: number): number =>
   Math.floor(Math.random() * (max - min + 1) + min);
 
@@ -20,14 +18,7 @@ const container: Element = document.querySelector(".me");
 const canvas: HTMLCanvasElement = container.querySelector("canvas");
 const context: CanvasRenderingContext2D = canvas.getContext("2d");
 
-interface PhaseFunc {
-  (x: number): number;
-}
 
-interface PhaseContainer {
-  white: PhaseFunc;
-  random: PhaseFunc;
-}
 
 interface Particle {
   alpha: number;
@@ -46,12 +37,17 @@ const resize = () => (canvas.width = container.clientWidth);
 window.addEventListener("resize", resize);
 resize();
 
-interface PhaseContainer {
-  white: PhaseFunc;
-  random: PhaseFunc;
+interface Shape {
+  (state: Particle): void
 }
 
-const shapes = {
+interface ShapeContainer {
+  bar: Shape;
+  triangle: Shape;
+  circle: Shape;
+}
+
+const shapes: ShapeContainer = {
   bar: (state: Particle) => {
     // tie width to alpha
     const width = state.radius * 2 + state.alpha * 10;
@@ -65,33 +61,53 @@ const shapes = {
     context.lineTo(x, y - height); // top left
   },
 
+  triangle: (state: Particle) => {
+    const len = state.radius * 3;
+    const y = state.y + len; // make sure it forms above the top border
+
+    context.moveTo(state.x, y); // left
+    context.lineTo(state.x + len / 2, y - len * 0.9); // center
+    context.lineTo(state.x + len, y); // right
+  },
+
   circle: (state: Particle) => {
     // y - radius to spawn above the top border
     context.arc(state.x, state.y + state.radius, state.radius, 0, 6.2832);
   },
 };
 
-const phases: PhaseContainer = {
+
+interface Phaser {
+  (x: number): number;
+}
+
+interface PhaserContainer {
+  white: Phaser;
+  rainbow: Phaser;
+  random: Phaser;
+}
+
+const phasers: PhaserContainer = {
   white: (x) => 0,
+  rainbow: (x) => x / 50,
   random: (x) => Math.floor(Math.random() * 20),
 };
 
 const defaults = {
   shape: "bar",
-  phase: phases.white,
+  phase: phasers.white,
 };
 
 function color(state: Particle): string {
   if (state.phase) {
-    const { phase, y } = state;
-    const coeff = 0.0314 * y + phase;
+    const coeff = 0.0314 * state.y + state.phase;
     return (
       Math.floor(Math.sin(coeff + 2) * 127 + 128) +
       "," +
       Math.floor(Math.sin(coeff + 0) * 127 + 128) +
       "," +
       Math.floor(Math.sin(coeff + 4) * 127 + 128)
-    )
+    );
   }
   return state.color;
 }
@@ -117,13 +133,11 @@ function update(state?: Particle): Particle {
   if (!state || state.alpha < 0) {
     return newParticle();
   }
-  return {
-    ...state,
-    y: state.y - state.velocity,
-    alpha: state.alpha - 0.02,
-    velocity: state.velocity + 0.03,
-    color: color(state),
-  };
+  state.y = state.y - state.velocity
+  state.alpha = state.alpha - 0.02;
+  state.velocity = state.velocity + 0.03;
+  state.color = color(state);
+  return state;
 }
 
 function draw(state: Particle): void {
@@ -158,12 +172,12 @@ function run() {
 run();
 
 const over = () => {
-  defaults.phase = phases.random;
+  defaults.phase = phasers.rainbow;
   defaults.shape = "circle";
 };
 
 const out = () => {
-  defaults.phase = phases.white;
+  defaults.phase = phasers.white;
   defaults.shape = "bar";
 };
 
