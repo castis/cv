@@ -1,5 +1,7 @@
 build:
-	docker-compose run --rm web npm run build
+	rm -rf ./dist
+	mkdir ./dist
+	docker-compose run --rm web npm run build --no-optimize
 
 dev:
 	docker-compose run --rm --service-ports web parcel serve src/index.html

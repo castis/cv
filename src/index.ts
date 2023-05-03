@@ -18,8 +18,6 @@ const container: Element = document.querySelector(".me");
 const canvas: HTMLCanvasElement = container.querySelector("canvas");
 const context: CanvasRenderingContext2D = canvas.getContext("2d");
 
-
-
 interface Particle {
   alpha: number;
   x: number;
@@ -38,13 +36,11 @@ window.addEventListener("resize", resize);
 resize();
 
 interface Shape {
-  (state: Particle): void
+  (state: Particle): void;
 }
 
 interface ShapeContainer {
-  bar: Shape;
-  triangle: Shape;
-  circle: Shape;
+  [index: string]: Shape;
 }
 
 const shapes: ShapeContainer = {
@@ -75,7 +71,6 @@ const shapes: ShapeContainer = {
     context.arc(state.x, state.y + state.radius, state.radius, 0, 6.2832);
   },
 };
-
 
 interface Phaser {
   (x: number): number;
@@ -133,7 +128,7 @@ function update(state?: Particle): Particle {
   if (!state || state.alpha < 0) {
     return newParticle();
   }
-  state.y = state.y - state.velocity
+  state.y = state.y - state.velocity;
   state.alpha = state.alpha - 0.02;
   state.velocity = state.velocity + 0.03;
   state.color = color(state);

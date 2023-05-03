@@ -1,9 +1,16 @@
 {
-  "devDependencies": {
-    "@parcel/transformer-sass": "2.4.1"
-  },
   "scripts": {
     "prebuild": "rm -f ./dist/index*",
     "build": "parcel build --no-source-maps --dist-dir=./dist/ src/index.html"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "2.8.3",
+    "ts-loader": "^9.4.2",
+    "typescript": "^5.0.4",
+    "webpack-cli": "^5.0.2",
+    "webpack-dev-server": "^4.13.3"
+  },
+  "dependencies": {
+    "webpack": "^5.81.0"
   }
 }
