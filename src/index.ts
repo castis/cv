@@ -77,9 +77,7 @@ interface Phaser {
 }
 
 interface PhaserContainer {
-  white: Phaser;
-  rainbow: Phaser;
-  random: Phaser;
+  [index: string]: Phaser;
 }
 
 const phasers: PhaserContainer = {
