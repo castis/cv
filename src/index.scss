@@ -484,6 +484,44 @@ $bg-top: #006f94;
     }
   }
 
+  .transition {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 20px;
+
+    .line {
+      width: 80%;
+      height: 0;
+      margin: 10px auto;
+      border-width: 1px 0 0 0;
+      border-style: dotted;
+      border-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .description {
+      position: relative;
+      z-index: 2;
+      top: -16px;
+      background: #FFF;
+      color: rgba(0, 0, 0, 0.3);
+      margin: 0 auto;
+      padding: 0 10px;
+      font-size: 10px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .line {
+        border-color: rgba(255, 255, 255, 0.4);
+      }
+  
+      .description {
+        background: #031223;
+        color: rgba(255, 255, 255, 0.3);
+      }
+    }
+  }
+
   @media (prefers-color-scheme: dark) {
     &,
     a {

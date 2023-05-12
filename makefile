@@ -1,5 +1,8 @@
 .PHONY: build deploy
 
+start:
+	docker-compose run --rm --service-ports web npm run start
+
 build:
 	rm -rf ./dist
 	mkdir ./dist

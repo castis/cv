@@ -1,3 +1,2 @@
-- `make dev`
 - `make build`
 - `make deploy`
