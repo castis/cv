@@ -1,7 +1,7 @@
 const rangeRand = (min: number, max: number): number =>
   Math.floor(Math.random() * (max - min + 1) + min);
 
-const group: Element = document.querySelector(".photo svg");
+const group: Element = document.querySelector(".photo svg")!;
 const pieces: NodeListOf<Element> = group.querySelectorAll("g circle, g path");
 
 function rotateSVGPieces() {
@@ -14,9 +14,9 @@ function rotateSVGPieces() {
 }
 rotateSVGPieces();
 
-const container: Element = document.querySelector(".me");
-const canvas: HTMLCanvasElement = container.querySelector("canvas");
-const context: CanvasRenderingContext2D = canvas.getContext("2d");
+const container: Element = document.querySelector(".me")!;
+const canvas: HTMLCanvasElement = container.querySelector("canvas")!;
+const context: CanvasRenderingContext2D = canvas.getContext("2d")!;
 
 interface Particle {
   alpha: number;
@@ -72,15 +72,13 @@ const shapes: ShapeContainer = {
   },
 };
 
-interface Phaser {
-  (x: number): number;
+interface Phasers {
+  [index: string]: {
+    (x: number): number;
+  };
 }
 
-interface PhaserContainer {
-  [index: string]: Phaser;
-}
-
-const phasers: PhaserContainer = {
+const phasers: Phasers = {
   white: (x) => 0,
   rainbow: (x) => x / 50,
   random: (x) => Math.floor(Math.random() * 20),
