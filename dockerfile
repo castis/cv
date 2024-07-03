@@ -1,6 +1,4 @@
 FROM node:latest AS dev
-RUN apt-get update && apt-get install -y python3-pip python3-dev build-essential
-
 WORKDIR /cv
-COPY package*.json ./
-RUN npm install
+RUN npm install parcel @parcel/transformer-sass parcel-plugin-static-files-copy
+EXPOSE 1234

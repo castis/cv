@@ -6,8 +6,9 @@ services:
       context: .
       dockerfile: dockerfile
     volumes:
-      - .:/cv
+      - ./src:/cv/src
+      - ./dist:/cv/dist
     ports:
-      - 8080:8080
+      - 1234:1234
     stdin_open: true
     tty: true

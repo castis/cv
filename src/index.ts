@@ -7,9 +7,12 @@ const pieces: NodeListOf<Element> = group.querySelectorAll("g circle, g path");
 function rotateSVGPieces() {
   const piece: Element = pieces[Math.floor(Math.random() * pieces.length)];
   piece.classList.add("hide");
-  setTimeout(() => {
-    piece.classList.remove("hide");
-  }, rangeRand(1000, 2000));
+  setTimeout(
+    () => {
+      piece.classList.remove("hide");
+    },
+    rangeRand(1000, 2000),
+  );
   setTimeout(rotateSVGPieces, rangeRand(200, 1000));
 }
 rotateSVGPieces();
@@ -30,6 +33,10 @@ interface Particle {
 }
 
 let particles: Array<Particle> = [];
+const fps = 40;
+const interval = 1000 / fps;
+let lastTime = 0;
+const rateOfChange = 0.03;
 
 const resize = () => (canvas.width = container.clientWidth);
 window.addEventListener("resize", resize);
@@ -120,24 +127,16 @@ function newParticle(): Particle {
   };
 }
 
-function update(state?: Particle): Particle {
+function update(speed: number = 0, state?: Particle): Particle {
   if (!state || state.alpha < 0) {
     return newParticle();
   }
-  state.y = state.y - state.velocity;
-  state.alpha = state.alpha - 0.02;
-  state.velocity = state.velocity + 0.03;
+
+  state.y = state.y - state.velocity * speed;
+  state.alpha = state.alpha - 0.02 * speed;
+  state.velocity = state.velocity + 0.03 * speed;
   state.color = color(state);
   return state;
-}
-
-function draw(state: Particle): void {
-  context.beginPath();
-
-  shapes[state.shape](state);
-
-  context.fillStyle = "rgba(" + state.color + "," + state.alpha + ")";
-  context.fill();
 }
 
 // slowly add new particles otherwise
@@ -153,14 +152,42 @@ function addParticles() {
 }
 addParticles();
 
-function run() {
-  context.clearRect(0, 0, canvas.width, canvas.height);
+function updateParticles(deltaTime: number) {
+  const speed = deltaTime * rateOfChange;
   for (let i = particles.length; i--; ) {
-    draw((particles[i] = update(particles[i])));
+    particles[i] = update(speed, particles[i]);
   }
-  requestAnimationFrame(run);
 }
-run();
+
+function render() {
+  context.clearRect(0, 0, canvas.width, canvas.height);
+
+  for (let i = particles.length; i--; ) {
+    const state = particles[i];
+
+    context.beginPath();
+
+    shapes[state.shape](state);
+
+    context.fillStyle = "rgba(" + state.color + "," + state.alpha + ")";
+    context.fill();
+  }
+}
+
+function gameLoop(currentTime: number) {
+  const deltaTime = currentTime - lastTime;
+
+  updateParticles(deltaTime);
+
+  if (deltaTime >= interval) {
+    lastTime = currentTime;
+    render();
+  }
+
+  requestAnimationFrame(gameLoop);
+}
+
+requestAnimationFrame(gameLoop);
 
 const over = () => {
   defaults.phase = phasers.rainbow;

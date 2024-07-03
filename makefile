@@ -1,12 +1,14 @@
-.PHONY: build deploy
+.PHONY: dev build deploy build-deploy
 
-start:
-	docker-compose run --rm --service-ports web npm run start
+dev:
+	docker-compose run --rm --service-ports web npx parcel serve ./src/index.html
 
 build:
-	rm -rf ./dist
-	mkdir ./dist
-	docker-compose run --rm web npm run build
+	rm -rf ./dist/*
+	docker-compose run --rm web npx parcel build --no-optimize ./src/index.html
 
 deploy:
-	rsync --delete -rv ./dist/ storm:/opt/cv
+	ssh storm "rm -rf /opt/cv/*"
+	rsync -rv ./dist/ storm:/opt/cv
+
+build-deploy: build deploy
